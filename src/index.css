@@ -1,0 +1,23 @@
+/* 这里只写全局样式 */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;  
+  background: #f3f3f3;
+}
+
+.g-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 所有固定颜色 */
+
+.g-color-gray {
+  color: #8590a6;
+}
+
+.g-color-gray-fill {
+  fill: #9fadc7;
+}
+

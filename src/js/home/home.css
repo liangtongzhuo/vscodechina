@@ -1,0 +1,113 @@
+.home{
+  padding-top: 60px;
+}
+
+.home .left{
+  display: inline-block;
+  width: 70%;
+}
+
+.home .right{
+  display: inline-block;  
+  position: fixed;
+  width: 300px;
+}
+
+.home .left .item {
+  margin-bottom: 10px;
+  padding: 16px 20px;
+  border-radius: 2px;  
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.home .left .item .span{
+  font-size: 15px;  
+  color: #8590a6;
+}
+
+.home .left .item .user{
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.home .left .item .user .headimg{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.home .left .item .user .name{
+  margin-left: 10px;
+  font-size: 15px;  
+  color: #262626;
+  text-decoration: none;
+}
+
+.home .left .item .user .github{
+  margin-left: 10px;
+  font-size: 12px;  
+  color: #8590a6;
+}
+
+.home .left .item .h1{
+  font-size: 16px;
+}
+
+.home .left .item .content{
+  display: flex;
+  cursor: pointer;  
+}
+
+.home .left .item .content .img{
+  width: 190px;
+  height: 105px;
+  border-radius: 4px;    
+  /* 图片剧中 */
+  background-position: center;
+  /* 大小 */
+  background-size: cover;  
+  /* 不重复 */
+  background-repeat: no-repeat;  
+}
+
+.home .left .item .content .info{
+  flex: 1;
+  margin-left: 10px;
+  font-size: 15px;
+  line-height: 1.7em;  
+  color: #262626;
+}
+
+.home .left .item .content .info:hover{
+  color: #8590a6;
+}
+
+.home .left .item .content .info .button{
+  padding: 2px 3px;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  color: #8590a6;  
+}
+
+.home .left .item .tool{
+  margin-top: 10px;
+}
+
+.home .left .item .tool .button{
+  margin-right: 3px;
+  padding: 5px 10px;
+  min-width: 0;
+  min-height: 0;
+  line-height:1em;  
+  color: #8590a6;  
+}
+
+.home .right .card {
+  margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  background: #fff;
+  padding: 10px;
+}
