@@ -3,7 +3,7 @@ import {
   NavLink,
   Link
 } from 'react-router-dom'
-import { Button, Badge, IconButton } from 'material-ui'
+import { Button, IconButton } from 'material-ui'
 
 import "./header.css"
 import { Bell } from "./svg.js"
@@ -21,11 +21,9 @@ class Header extends Component {
             <Button className="button"><NavLink to="/issue" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
           </nav>
           <div className="right">
-          <Button className="button"><NavLink to="/release" className="g-color-gray a" activeClassName="selected"> 发布话题 </NavLink></Button>
-            <IconButton>
-              <Badge color="primary" badgeContent={10}>
-                <Bell className="g-color-gray-fill"/>
-              </Badge>
+            <Button className="button"><NavLink to="/release" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
+            <IconButton className="bell">
+              <Bell className="g-color-gray-fill" />
             </IconButton>
             <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="header" />
           </div>

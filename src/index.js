@@ -4,13 +4,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AV from "leancloud-storage";
-import App from './js/App';
+import App from './js';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 //初始化 Leancloud 
-const appId = 'U4D6TL1HgHHauvmmmhR7qNYA-gzGzoHsz';
-const appKey = 'wbh3vxJVB72NUiX8sSkcOPzx';
+const appId = '2MY9AH1hE38iVn6cfSMeVXW8-gzGzoHsz';
+const appKey = 'rhmGmvC4cz4qohsQlpmP0KV0';
 AV.init({ appId, appKey });
 
 ReactDOM.render(<App />, document.getElementById('root'));

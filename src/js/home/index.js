@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
+import AV from "leancloud-storage"
 import "./home.css"
-import { Bottom, Good, Message, Collection, Share } from "./svg.js";
+import { Bottom, Good, Message, Collection, Share } from "./svg.js"
 
 class Home extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
+
+    this.state = { items: [] }
   }
 
   // 加载一次，Dom 未加载
@@ -16,19 +19,29 @@ class Home extends Component {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-
+    const query = new AV.Query('Atricle')
+    query.limit(1000)
+    query.descending('createdAt')
+    // query.contains('tag', decodeURI()) //注意转码
+    query.find().then((items) => {
+      this.setState({
+        items: items
+      });
+    }, function (error) {
+      console.error(error)
+    })
   }
   // 渲染 Dom
   render() {
     console.log('-----', this.props.match);
+
+    const items = this.state.items.map((item, index) =>
+      <Item key={index} item={item}/>
+    )
     return (
       <div className="g-container home">
         <div className="left">
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
+          {items}
         </div>
         <div className="right">
           <div className="card">
@@ -62,13 +75,18 @@ class Home extends Component {
 }
 
 class Item extends Component {
+  // 加载一次，初始化状态
+  constructor(props, context) {
+    super(props)
+  }
 
   render() {
+    console.log(this.props.item.tag)
     return (
       <div className="item">
         {/* 简介 */}
         <div>
-          <span className="span">来自问答</span>
+          <span className="span">{this.props.item.get('tag')}</span>
         </div>
         {/* 用户信息 */}
         <div className="user">
@@ -77,7 +95,7 @@ class Item extends Component {
           <Link className="github" to="/"> GitHub </Link>
         </div>
         {/* 标题 */}
-        <h1 className="h1">Visual Studio Code 中文社区</h1>
+        <h1 className="h1">{this.props.item.get('title')}</h1>
         {/* 内容 */}
         <div className="content">
           <div className="img" style={{ backgroundImage: "url(http://ac-2my9ah1h.clouddn.com/e9daf54e67c3221e9e7e.jpg)" }}> </div>
