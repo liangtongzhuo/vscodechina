@@ -21,7 +21,7 @@ class Header extends Component {
             <Button className="button"><NavLink to="/issue" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
           </nav>
           <div className="right">
-            <Button className="button"><NavLink to="/release" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
+            <Button className="button"><NavLink to="/write/create" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
             <IconButton className="bell">
               <Bell className="g-color-gray-fill" />
             </IconButton>

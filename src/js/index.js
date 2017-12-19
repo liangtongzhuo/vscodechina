@@ -14,8 +14,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Header/>
-          <Route path="/:page?" component={Home} />
+          <Header />
+          <Route exact path="/:page?" component={Home} />
         </div>
       </Router>
     );

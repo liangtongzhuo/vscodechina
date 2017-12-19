@@ -9,7 +9,6 @@ class Home extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-
     this.state = { items: [] }
   }
 
@@ -33,7 +32,7 @@ class Home extends Component {
   }
   // 渲染 Dom
   render() {
-    console.log('-----', this.props.match);
+    // console.log('-----', this.props.match);
 
     const items = this.state.items.map((item, index) =>
       <Item key={index} item={item}/>
@@ -81,7 +80,6 @@ class Item extends Component {
   }
 
   render() {
-    console.log(this.props.item.tag)
     return (
       <div className="item">
         {/* 简介 */}
