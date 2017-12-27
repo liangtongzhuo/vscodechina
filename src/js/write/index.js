@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from 'material-ui'
-import AV from "leancloud-storage"
+// import { Link } from 'react-router-dom'
+// import { Button } from 'material-ui'
+// import AV from "leancloud-storage"
 import "./write.css"
+import "github-markdown-css"
 
 class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
+
+    this._onChange = this._onChange.bind(this)
   }
 
   // 加载一次，Dom 未加载
@@ -18,10 +21,25 @@ class Write extends Component {
   componentDidMount() {
 
   }
+  _onChange(e){
+    console.log(e.value)
+  }
   // 渲染 Dom
   render() {
     return (
-      <div>aaa</div>
+      <div className="write">
+        <div className="head">
+          <input placeholder="输入文章标题..." maxLength="80" />
+        </div>
+        <div className="content">
+          <div className="wr">
+            <textarea onChange={this._onChange} placeholder="内容" ></textarea>
+          </div>
+          <div className="look markdown-body">
+          adadada
+          </div>
+        </div>
+      </div>
     )
   }
   // 父组建更新 Props 调用

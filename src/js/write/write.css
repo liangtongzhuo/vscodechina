@@ -1,0 +1,47 @@
+.write .head{
+    height: 50px;
+    box-shadow: 0 1px 3px 0 rgba(0,34,77,.1);
+    background: #fff; 
+    padding: 0 20px;
+    display: flex;        
+}
+
+.write .head input {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    font-weight: 700;
+    color: #000;
+    flex: 1;
+}
+
+.write .content {
+    display: flex;
+}
+
+.write .content .wr{
+    display: inline-block;
+    flex: 1 ;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.write .content .wr textarea{
+    flex: 1;
+    padding: 20px;
+    resize: none;
+    outline: none;
+    border: none;
+    background: #f3f3f3;
+    height: 100%;
+}
+
+
+.write .content .look{
+    display: inline-block;
+    flex: 1 ;
+    padding: 20px;
+    box-sizing: border-box;
+}
