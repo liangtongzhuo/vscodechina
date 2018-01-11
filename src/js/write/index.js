@@ -11,10 +11,10 @@ class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = {data:'文章展示'}
-    this._onChange = this._onChange.bind(this)
+    this.state = {title:'标题',data:'内容'}
+    this._onChangeContent = this._onChangeContent.bind(this)
+    this._onChangeTitle = this._onChangeTitle.bind(this)
   }
-
   // 加载一次，Dom 未加载
   componentWillMount() {
 
@@ -23,7 +23,10 @@ class Write extends Component {
   componentDidMount() {
 
   }
-  _onChange(e){
+  _onChangeTitle(e){
+    this.setState({title: e.target.value})
+  }
+  _onChangeContent(e){
     this.setState({data: e.target.value})
   }
   // 渲染 Dom
@@ -31,11 +34,12 @@ class Write extends Component {
     return (
       <div className="write">
         <div className="head">
-          <input placeholder="输入文章标题..." maxLength="80" />
+          <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
+          <div>{this.state.title}</div>
         </div>
         <div className="content">
           <div className="wr">
-            <textarea onChange={this._onChange} placeholder="请输入内容" ></textarea>
+            <textarea onChange={this._onChangeContent} placeholder="请输入内容" ></textarea>
           </div>
           <ReactMarkdown source={this.state.data} className="look markdown-body"/>
           

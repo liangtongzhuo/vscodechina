@@ -6,7 +6,8 @@
     display: flex;        
 }
 
-.write .head input {
+.write .head input,.write .head div {
+    display: flex;
     margin: 0;
     padding: 0;
     font-size: 20px;
@@ -15,6 +16,7 @@
     font-weight: 700;
     color: #000;
     flex: 1;
+    line-height: 50px;    
 }
 
 .write .content {
@@ -37,7 +39,6 @@
     background: #f3f3f3;
     height: 100%;
 }
-
 
 .write .content .look{
     display: inline-block;
