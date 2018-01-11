@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 // import { Button } from 'material-ui'
 // import AV from "leancloud-storage"
-import "./write.css"
+import ReactMarkdown from 'react-markdown'
+
 import "github-markdown-css"
+import "./write.css"
 
 class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-
+    this.state = {data:'文章展示'}
     this._onChange = this._onChange.bind(this)
   }
 
@@ -22,7 +24,7 @@ class Write extends Component {
 
   }
   _onChange(e){
-    console.log(e.value)
+    this.setState({data: e.target.value})
   }
   // 渲染 Dom
   render() {
@@ -33,11 +35,10 @@ class Write extends Component {
         </div>
         <div className="content">
           <div className="wr">
-            <textarea onChange={this._onChange} placeholder="内容" ></textarea>
+            <textarea onChange={this._onChange} placeholder="请输入内容" ></textarea>
           </div>
-          <div className="look markdown-body">
-          adadada
-          </div>
+          <ReactMarkdown source={this.state.data} className="look markdown-body"/>
+          
         </div>
       </div>
     )
