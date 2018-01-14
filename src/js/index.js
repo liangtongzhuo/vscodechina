@@ -20,7 +20,7 @@ class App extends Component {
           {/* 文章列表 */}
           <Route exact path="/:page?" component={Home} />
           {/* 编辑页面 */}
-          <Route exact path="/write/create" component={Write} />          
+          <Route exact path="/write/create/:id?" component={Write} />          
         </div>
       </Router>
     );

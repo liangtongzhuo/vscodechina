@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
-// import { Button } from 'material-ui'
+import { Button } from 'material-ui'
 // import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
 
@@ -11,9 +11,12 @@ class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = {title:'标题',data:'内容'}
+    this.state = { title: '标题', data: '内容' }
+    
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
+    this._clickSave = this._clickSave.bind(this)
+    this._clickUpFile = this._clickUpFile.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -23,11 +26,17 @@ class Write extends Component {
   componentDidMount() {
 
   }
-  _onChangeTitle(e){
-    this.setState({title: e.target.value})
+  _onChangeTitle(e) {
+    this.setState({ title: e.target.value })
   }
-  _onChangeContent(e){
-    this.setState({data: e.target.value})
+  _onChangeContent(e) {
+    this.setState({ data: e.target.value })
+  }
+  _clickSave(e){
+    console.log(e)
+  }
+  _clickUpFile(e){
+
   }
   // 渲染 Dom
   render() {
@@ -35,14 +44,17 @@ class Write extends Component {
       <div className="write">
         <div className="head">
           <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
-          <div>{this.state.title}</div>
+          <div>
+            <Button className="button" onClick={this._clickSave}>保存</Button>
+            <Button className="upfile" onClick={this._clickUpFile}>上传图片</Button>           
+          </div>
         </div>
         <div className="content">
           <div className="wr">
             <textarea onChange={this._onChangeContent} placeholder="请输入内容" ></textarea>
           </div>
-          <ReactMarkdown source={this.state.data} className="look markdown-body"/>
-          
+          <ReactMarkdown source={this.state.data} className="markdown-body show" escapeHtml={false}/>
+
         </div>
       </div>
     )
