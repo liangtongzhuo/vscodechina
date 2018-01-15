@@ -18,7 +18,7 @@
     flex: 1;
 }
 
-.write .head div {
+.write .head >div {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -37,11 +37,26 @@
 }
 
 .write .head div .upfile{
+    position: relative;    
     margin: 0 10px;
     padding: 10px 20px;
-    min-width: 0;
+    width: 70px;
     height: 30px;
+    line-height: 30px;
+    background: #f3f3f3;
+    cursor:pointer;    
 }
+
+.write .head div .upfile input{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 110px;
+    opacity: 0;
+    cursor:pointer;    
+}
+
 
 .write .content {
     display: flex;

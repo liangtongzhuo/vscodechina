@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
-// import AV from "leancloud-storage"
+import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
 
 import "github-markdown-css"
@@ -12,7 +12,7 @@ class Write extends Component {
   constructor(props, context) {
     super(props)
     this.state = { title: '标题', data: '内容' }
-    
+
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
     this._clickSave = this._clickSave.bind(this)
@@ -32,10 +32,18 @@ class Write extends Component {
   _onChangeContent(e) {
     this.setState({ data: e.target.value })
   }
-  _clickSave(e){
-    console.log(e)
+  _clickSave(e) {
+    var Atricle = AV.Object.extend('Atricle');
+    var atricle = new Atricle();
+    atricle.set('title', '工程师周会');
+    atricle.set('content', '每周工程师会议，周一下午2点');
+    atricle.save().then(function (todo) {
+      // 成功保存之后，执行其他逻辑.
+    }, function (error) {
+      // 异常处理
+    });
   }
-  _clickUpFile(e){
+  _clickUpFile(e) {
 
   }
   // 渲染 Dom
@@ -46,14 +54,14 @@ class Write extends Component {
           <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
           <div>
             <Button className="button" onClick={this._clickSave}>保存</Button>
-            <Button className="upfile" onClick={this._clickUpFile}>上传图片</Button>           
+            <div className="upfile" onClick={this._clickUpFile}>上传图片<input type="file" id="img" /></div>
           </div>
         </div>
         <div className="content">
           <div className="wr">
             <textarea onChange={this._onChangeContent} placeholder="请输入内容" ></textarea>
           </div>
-          <ReactMarkdown source={this.state.data} className="markdown-body show" escapeHtml={false}/>
+          <ReactMarkdown source={this.state.data} className="markdown-body show" escapeHtml={false} />
 
         </div>
       </div>
