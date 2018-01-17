@@ -40,6 +40,7 @@
 
 .home .left .item .user .name{
   margin-left: 10px;
+  font-weight: bold;
   font-size: 15px;  
   color: #262626;
   text-decoration: none;
@@ -55,7 +56,7 @@
   font-size: 18px;
 }
 
-.home .left .item .content{
+.home .left .item >.content{
   display: flex;
   cursor: pointer;  
 }
@@ -70,11 +71,11 @@
   background-size: cover;  
   /* 不重复 */
   background-repeat: no-repeat;  
+  margin-right: 10px;  
 }
 
 .home .left .item .content .info{
   flex: 1;
-  margin-left: 10px;
   font-size: 15px;
   line-height: 1.7em;  
   color: #262626;
@@ -84,7 +85,11 @@
   color: #8590a6;
 }
 
-.home .left .item .content .info .button{
+.home .left .item .tool{
+  margin-top: 10px;
+}
+
+.home .button{
   padding: 2px 3px;
   margin: 0;
   min-width: 0;
@@ -92,17 +97,96 @@
   color: #8590a6;  
 }
 
-.home .left .item .tool{
-  margin-top: 10px;
-}
-
-.home .left .item .tool .button{
+.home  .button{
   margin-right: 3px;
   padding: 5px 10px;
   min-width: 0;
   min-height: 0;
   line-height:1em;  
   color: #8590a6;  
+}
+
+.home .left .item .messagesList{
+  border: 1px solid #e7eaf2;
+  border-radius: 4px;
+  margin-top: 12px;
+
+}
+
+.home .left .item .messagesList .messagesCount {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e1e1e;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e7eaf2;
+}
+
+.home .left .item .messagesList .messages {
+  font-size: 15px;
+}
+
+.home .left .item .messagesList .messages .head{
+  display: flex;
+  align-items: center;
+  padding: 10px 15px 0 15px;
+}
+
+.home .left .item .messagesList .messages .head .headimg{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;  
+}
+
+.home .left .item .messagesList .messages .head a{
+  margin-left: 10px;
+}
+
+.home .left .item .messagesList .messages .head span{
+  display: flex;
+  flex: 1 1;
+  justify-content: flex-end;
+  margin-left: 10px;
+  color: #8590a6;
+}
+
+.home .left .item .messagesList .messages .content{
+  padding: 15px;  
+  /* cursor: text; */
+}
+
+.home .left .item .messagesList .messages .messagetool{
+  padding-left: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e7eaf2;
+}
+
+.home .left .item .messagesList .messages .messagetool button{
+  padding: 7px 8px;
+}
+
+.home .left .item .messagesList .messages .replyMessage{
+  display: flex;
+  align-items: flex-end;
+}
+
+.home .left .item .messagesList .messages .replyMessage textarea{
+  height: 35px;
+  width: 84%;
+  margin: 10px;;
+  padding: 7px 7px 7px 7px;
+  border: 1px solid #e7eaf1;
+  box-sizing: border-box;
+  border-radius: 2px;
+  font-size: 15px;
+}
+
+.home .left .item .messagesList .messages .replyMessage button{
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  min-width: 0;
+  height: 30px;
+  background: #0f88eb;
+  color: white;
 }
 
 .home .right .card {

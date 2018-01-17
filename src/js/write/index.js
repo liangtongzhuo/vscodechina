@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
-import AV from "leancloud-storage"
+// import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
 
 import "github-markdown-css"
@@ -33,15 +33,15 @@ class Write extends Component {
     this.setState({ data: e.target.value })
   }
   _clickSave(e) {
-    var Atricle = AV.Object.extend('Atricle');
-    var atricle = new Atricle();
-    atricle.set('title', '工程师周会');
-    atricle.set('content', '每周工程师会议，周一下午2点');
-    atricle.save().then(function (todo) {
-      // 成功保存之后，执行其他逻辑.
-    }, function (error) {
-      // 异常处理
-    });
+    // var Atricle = AV.Object.extend('Atricle');
+    // var atricle = new Atricle();
+    // atricle.set('title', '工程师周会');
+    // atricle.set('content', '每周工程师会议，周一下午2点');
+    // atricle.save().then(function (todo) {
+    //   // 成功保存之后，执行其他逻辑.
+    // }, function (error) {
+    //   // 异常处理
+    // });
   }
   _clickUpFile(e) {
 

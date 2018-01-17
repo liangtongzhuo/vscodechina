@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import AV from "leancloud-storage"
+import TextareaAutosize from 'react-autosize-textarea'
 import "./home.css"
-import { Bottom, Good, Message, Collection, Share } from "./svg.js"
+import { Bottom, Good, Message, Collection, Share, Reply, MessageGood } from "./svg.js"
 
 class Home extends Component {
   // 加载一次，初始化状态
@@ -11,13 +12,15 @@ class Home extends Component {
     super(props)
     this.state = { items: [] }
   }
-
   // 加载一次，Dom 未加载
   componentWillMount() {
 
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
+    this._net()
+  }
+  _net() {
     const query = new AV.Query('Atricle')
     query.limit(1000)
     query.descending('createdAt')
@@ -33,9 +36,8 @@ class Home extends Component {
   // 渲染 Dom
   render() {
     // console.log('-----', this.props.match);
-
     const items = this.state.items.map((item, index) =>
-      <Item key={index} item={item}/>
+      <Item key={index} item={item} />
     )
     return (
       <div className="g-container home">
@@ -53,10 +55,12 @@ class Home extends Component {
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
-
   }
   // 更新 Props 或 State 则调用
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.match.params.page !== nextProps.match.params.page) {
+      this._net()
+    }
     return true
   }
   //在 Dom 更新之前调用 
@@ -111,17 +115,44 @@ class Item extends Component {
             <Good className="g-color-gray-fill" />&nbsp; 100 赞
               </Button>
 
-          <Button className="button">
+          <Button className="button" onClick={this._clickMessage}>
             <Message className="g-color-gray-fill" />&nbsp; 30 条评论
               </Button>
 
-          <Button className="button">
+          <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
               </Button>
 
-          <Button className="button">
+          <Button className="button" onClick={this._clickShare}>
             <Share className="g-color-gray-fill" />&nbsp; 分享
               </Button>
+        </div>
+
+        <div className="messagesList">
+          <div className="messagesCount">3 条留言</div>
+          <div className="messages">
+            <div className="head">
+              <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="头像" />
+              <a>梁萌萌</a>
+              <span>五天前</span>
+            </div>
+            <div className="content">真的超级萌萌</div>
+            <div className="messagetool">
+              <Button className="button" onClick={this._clickGood}>
+                <MessageGood className="g-color-gray-fill" />&nbsp; 100 赞
+              </Button>
+              <Button className="button" onClick={this._clickGood}>
+                <Reply className="g-color-gray-fill" />&nbsp; 回复
+              </Button>
+            </div>
+            <div className="replyMessage">
+              <TextareaAutosize placeholder="留言的人运气不会差" />
+              <Button className="" onClick={this._clickGood}>
+                发送
+              </Button>
+            </div>
+          </div>
+
         </div>
       </div>
     )
