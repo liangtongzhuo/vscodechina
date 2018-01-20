@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 
-
-let matches = '<p>aaaa</p>'.replace(/<[^>]+>/g, '');
-    console.log(matches)
 class Bell extends Component {
     render() {
-
         return (
             <svg className={this.props.className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 22" aria-labelledby="title">
                 <title>mic</title>

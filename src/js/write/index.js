@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
-import { Button } from 'material-ui'
-// import AV from "leancloud-storage"
+import { Button, List, ListItem, ListItemText, Menu, MenuItem } from 'material-ui'
+import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
 
 import "github-markdown-css"
 import "./write.css"
 
+const dataContent = '> 打开了总要说些什么  :)   '
+
 class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { title: '标题', data: '内容' }
+    this.state = { title: '标题', data: dataContent }
 
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
     this._clickSave = this._clickSave.bind(this)
     this._clickUpFile = this._clickUpFile.bind(this)
+    this._clickTextarea = this._clickTextarea.bind(this)
+    this._blurTextarea = this._blurTextarea.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -42,9 +45,52 @@ class Write extends Component {
     // }, function (error) {
     //   // 异常处理
     // });
-  }
-  _clickUpFile(e) {
 
+  }
+  // 选择图片后上传
+  _clickUpFile(e) {
+    const reader = new FileReader()
+    reader.readAsDataURL(this.refs.upFile.files[0])
+    const self = this
+    reader.onload = function () {
+      new AV.File('0', self._dataToBlob(this.result))
+        .save().then(object => {
+          const data = self.state.data
+          self.setState({
+            data: data + '![](' + object.attributes.url + ')'
+          })
+        }).catch(error => {
+          console.log(error)
+          alert('网络错误')
+        })
+    }
+  }
+  // dataURL 转 Blob
+  _dataToBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new Blob([u8arr], { type: mime })
+  }
+  _selectClick(index) {
+    console.log(index)
+  }
+  // 点击了 清空 textarea 
+  _clickTextarea() {
+    if (this.state.data.length === dataContent.length && this.state.data === dataContent) {
+      this.setState({
+        data: ''
+      })
+    }
+  }
+  // 取消了 textarea
+  _blurTextarea(e){
+    if(e.target.value.length === 0) {
+      this.setState({ data: dataContent })
+      return
+    }
   }
   // 渲染 Dom
   render() {
@@ -54,15 +100,15 @@ class Write extends Component {
           <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
           <div>
             <Button className="button" onClick={this._clickSave}>保存</Button>
-            <div className="upfile" onClick={this._clickUpFile}>上传图片<input type="file" id="img" /></div>
+            <div className="upfile" >上传图片<input ref="upFile" type="file" id="img" onChange={this._clickUpFile} /></div>
+            <SelectListMenu _selectClick={this._selectClick} />
           </div>
         </div>
         <div className="content">
           <div className="wr">
-            <textarea onChange={this._onChangeContent} placeholder="请输入内容" ></textarea>
+            <textarea onChange={this._onChangeContent} value={this.state.data} onClick={this._clickTextarea} onBlur={this._blurTextarea}></textarea>
           </div>
           <ReactMarkdown source={this.state.data} className="markdown-body show" escapeHtml={false} />
-
         </div>
       </div>
     )
@@ -86,6 +132,71 @@ class Write extends Component {
   // 拆卸调用
   componentWillUnmount() {
 
+  }
+}
+
+const options = [
+  '分享',
+  '问答'
+]
+
+class SelectListMenu extends Component {
+
+  constructor(props, context) {
+    super(props)
+    this.state = {
+      anchorEl: null,
+      selectedIndex: 1
+    }
+  }
+
+  handleClickListItem = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleMenuItemClick = (event, index) => {
+    this.props._selectClick(index)
+    this.setState({ selectedIndex: index, anchorEl: null })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
+  render() {
+    const { anchorEl } = this.state
+    return (
+      <div className="menu">
+        <List>
+          <ListItem
+            aria-haspopup="true"
+            aria-controls="lock-menu"
+            onClick={this.handleClickListItem}
+          >
+            <ListItemText
+              primary="选择类型"
+              secondary={options[this.state.selectedIndex]}
+            />
+          </ListItem>
+        </List>
+        <Menu
+          id="lock-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={option}
+              selected={index === this.state.selectedIndex}
+              onClick={event => this.handleMenuItemClick(event, index)}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </Menu>
+      </div>
+    )
   }
 }
 

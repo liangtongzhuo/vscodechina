@@ -3,7 +3,8 @@
     box-shadow: 0 1px 3px 0 rgba(0,34,77,.1);
     background: #fff; 
     padding: 0 20px;
-    display: flex;        
+    display: flex;  
+    overflow: hidden;      
 }
 
 .write .head input{
@@ -54,6 +55,12 @@
     height: 50px;
     width: 110px;
     opacity: 0;
+    cursor:pointer;    
+}
+
+.write .head div .menu{
+    margin-right: 10px;
+    background: #f3f3f3;
     cursor:pointer;    
 }
 
