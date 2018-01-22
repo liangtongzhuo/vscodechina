@@ -10,6 +10,13 @@ class Login extends Component {
   constructor(props, context) {
     super(props)
     console.log(111)
+    this.state = { show: false }
+
+    this._clickLogin = this._clickLogin.bind(this)
+    this._clicRegister = this._clicRegister.bind(this)
+    this._onChangeMail = this._onChangeMail.bind(this)
+    this._onChangePassword = this._onChangePassword.bind(this)
+    this._onGitHub = this._onGitHub.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -20,43 +27,62 @@ class Login extends Component {
 
   }
   _clickLogin(e) {
+    this.props.history.push('/')
+    // AV.User.logIn('Tom', 'cat!@#123').then(function (loginedUser) {
+    //   console.log(loginedUser);
+    // }, function (error) {
+    // });
+  }
+  _clicRegister(e) {
+  //   AV.User.requestEmailVerify('abc@xyz.com').then(function (result) {
+  //     console.log(JSON.stringify(result));
+  // }, function (error) {
+  //     console.log(JSON.stringify(error));
+  // });
+  }
+  _onGitHub(e) {
 
   }
-  _clicRegister(e){
+  _onChangeMail(e) {
+    this.setState({ mail: e.target.value })
 
+    
+  }
+  _onChangePassword(e) {
+    this.setState({ password: e.target.value })
   }
   // 渲染 Dom
   render() {
     return (
       <div className="login">
-        <Progress show={true}/>
+        <Progress show={this.state.show} />
         <div className="box">
           <h1>VSCodeChina</h1>
           <TextField
             required
             className="item"
-            id="name"
             label="邮箱"
+            onChange={this._onChangeMail}
           />
           <TextField
             required
             className="item"
-            id="password"
             label="密码"
             type="password"
+            onChange={this._onChangePassword}
           />
 
           <div className="itemButton">
-            <Button  className="button">
+            <Button className="button" onClick={this._clickLogin}>
               登陆
             </Button>
-            <Button  className="button">
+            <Button className="button" onClick={this._clicRegister}>
               注册
           </Button>
           </div>
 
-          <Button  className="buttonGithub">
-              GitHub 授权登陆
+          <Button className="buttonGithub" onClick={this._onGitHub}>
+            GitHub 授权登陆
           </Button>
         </div>
       </div>
