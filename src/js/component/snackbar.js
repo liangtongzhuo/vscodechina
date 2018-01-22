@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { LinearProgress } from 'material-ui'
+import { Snackbar } from 'material-ui'
 
-import "./progress.css"
+import "./snackbar.css"
 
-class Progress extends Component {
+class SnackBar extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
@@ -19,18 +19,18 @@ class Progress extends Component {
   }
 
   render() {
-    if (this.props.show) {
-      return (
-        <LinearProgress className="LinearProgress"/>
-      )
-    } else {
-      return (<div/>)
-    }
+    return (
+      <Snackbar className="snackbar"
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={this.props.open}
+        message={this.props.content || '梁萌萌'}
+      />
+    )
   }
 
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
-
+   
   }
   // 更新 Props 或 State 则调用
   shouldComponentUpdate(nextProps, nextState) {
@@ -51,4 +51,4 @@ class Progress extends Component {
 }
 
 
-export default Progress
+export default SnackBar

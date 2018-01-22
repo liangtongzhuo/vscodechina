@@ -1,22 +1,27 @@
 import React, { Component } from 'react'
 import { TextField, Button } from 'material-ui'
-// import AV from "leancloud-storage"
-import "./login.css"
+import AV from "leancloud-storage"
 import Progress from "../component/progress.js"
+import SnackBar from "../component/snackbar.js"
+
+import "./login.css"
 
 
 class Login extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    console.log(111)
-    this.state = { show: false }
+    this.state = {}
 
     this._clickLogin = this._clickLogin.bind(this)
     this._clicRegister = this._clicRegister.bind(this)
     this._onChangeMail = this._onChangeMail.bind(this)
     this._onChangePassword = this._onChangePassword.bind(this)
     this._onGitHub = this._onGitHub.bind(this)
+    this._onBlur = this._onBlur.bind(this)
+    this._findPsw = this._findPsw.bind(this)
+    this._findSend = this._findSend.bind(this)
+
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -26,67 +31,185 @@ class Login extends Component {
   componentDidMount() {
 
   }
+  // 登陆
   _clickLogin(e) {
-    this.props.history.push('/')
-    // AV.User.logIn('Tom', 'cat!@#123').then(function (loginedUser) {
-    //   console.log(loginedUser);
-    // }, function (error) {
-    // });
+    this.setState({ progressShow: true })
+    const mail = this.state.mail
+    const password = this.state.password
+    AV.User.logIn(mail, password).then(loginedUser => {
+      this.props.history.push('/')
+    }).catch(error => {
+      console.log(error)
+      this._snackBarOpen('网络错误')
+      this.setState({ progressShow: false })
+    })
   }
+  // 注册
   _clicRegister(e) {
-  //   AV.User.requestEmailVerify('abc@xyz.com').then(function (result) {
-  //     console.log(JSON.stringify(result));
-  // }, function (error) {
-  //     console.log(JSON.stringify(error));
-  // });
+    if (!this.state.buttonLogin) {
+      this._snackBarOpen('请在本页面填写「账号」与「密码」，再点击注册')
+      return
+    }
+    this.setState({ progressShow: true })
+    const mail = this.state.mail
+    const password = this.state.password
+    const user = new AV.User()
+    user.setUsername(mail)
+    user.setEmail(mail)
+    user.setPassword(password)
+    user.signUp().then(loginedUser => {
+      this.props.history.push('/')
+    }).catch(error => {
+      this.setState({ progressShow: false })
+      if (error.code === 203)
+        return this._snackBarOpen('邮箱已被注册')
+      if (error.code === 125)
+        return this._snackBarOpen('电子邮箱地址无效')
+      return this._snackBarOpen('网络错误')
+    })
+  }
+  // 切换找回密码与登陆界面
+  _findPsw(e) {
+    this.setState({ findPsw: !this.state.findPsw })
+  }
+  // 根据邮箱找回密码
+  _findSend() {
+    this.setState({ progressShow: true })
+    const mail = this.state.mail
+    if(!mail){
+      return this._snackBarOpen('请输入邮箱')      
+    }
+    AV.User
+      .requestPasswordReset(mail)
+      .then(success => {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('已经向 '+ mail + '发送一封邮件')
+      }).catch(error => {
+        this.setState({ progressShow: false })
+        console.log(error.code)
+        if (error.code === 1)
+        return this._snackBarOpen('稍后在试')
+        if (error.code === 205)
+        return this._snackBarOpen('找不到电子邮箱地址对应的用户')
+        return this._snackBarOpen('网络异常')
+      })
   }
   _onGitHub(e) {
 
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })
-
-    
+    this._verify()
   }
   _onChangePassword(e) {
     this.setState({ password: e.target.value })
+    this._verify()
+  }
+  // 判断账号和密码合法性，修改状态
+  _verify() {
+    // 密码与邮箱符合验证
+    if (this.state.password && this.state.password.length >= 6
+      && this.state.mail && this.state.mail.match(/^(.+)@(.+)$/)) {
+      this.setState({ buttonLogin: true })
+    } else {
+      this.setState({ buttonLogin: false })
+    }
+
+    if (this.state.mail && this.state.mail.match(/^(.+)@(.+)$/)) {
+      this.setState({ buttonMailError: false })
+    } else if (this.state.mail) {
+      this.setState({ buttonMailError: true })
+      return
+    }
+
+    if (!this.state.password) return
+
+    if (this.state.password && this.state.password.length >= 6) {
+      this.setState({ buttonPasswordError: false })
+    } else {
+      this.setState({ buttonPasswordError: true })
+    }
+
+  }
+
+  // 失去焦点
+  _onBlur(e) {
+    this._verify()
   }
   // 渲染 Dom
   render() {
+    const hiddenStyle = {
+      display: 'none'
+    }
+    const visibleStyle = {
+      display: ''
+    }
     return (
       <div className="login">
-        <Progress show={this.state.show} />
-        <div className="box">
+        <Progress show={this.state.progressShow} />
+        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+        <div className="box" style={this.state.findPsw ? hiddenStyle : visibleStyle}>
           <h1>VSCodeChina</h1>
           <TextField
             required
+            error={this.state.buttonMailError}
             className="item"
-            label="邮箱"
+            label={this.state.buttonMailError ? '不是合法邮箱' : '邮箱'}
             onChange={this._onChangeMail}
+            onBlur={this._onBlur}
           />
           <TextField
             required
+            error={this.state.buttonPasswordError}
             className="item"
-            label="密码"
+            label={this.state.buttonPasswordError ? '密码大于等于 6 位' : '密码'}
             type="password"
             onChange={this._onChangePassword}
+            onBlur={this._onBlur}
           />
-
+          {/* 按钮 */}
           <div className="itemButton">
-            <Button className="button" onClick={this._clickLogin}>
+            <Button disabled={!this.state.buttonLogin} className="button" onClick={this._clickLogin}>
               登陆
-            </Button>
+          </Button>
             <Button className="button" onClick={this._clicRegister}>
               注册
           </Button>
           </div>
-
           <Button className="buttonGithub" onClick={this._onGitHub}>
             GitHub 授权登陆
+          </Button>
+          <Button className="findPsw" onClick={this._findPsw}>
+            找回密码
+          </Button>
+        </div>
+
+        <div className="box" style={this.state.findPsw ? visibleStyle : hiddenStyle}>
+          <h1>VSCodeChina</h1>
+          <TextField
+            required
+            error={this.state.buttonMailError}
+            className="item"
+            label={this.state.buttonMailError ? '不是合法邮箱' : '邮箱'}
+            onChange={this._onChangeMail}
+            onBlur={this._onBlur}
+          />
+          {/* 按钮 */}
+          <Button className="buttonGithub" onClick={this._findSend}>
+            发送邮件
+          </Button>
+          <Button className="findPsw" onClick={this._findPsw}>
+            返回
           </Button>
         </div>
       </div>
     )
+  }
+  _snackBarOpen(content, time = 2000) {
+    this.setState({ snackBarOpen: true, content: content })
+    setTimeout(() => {
+      this.setState({ snackBarOpen: false })
+    }, time)
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {

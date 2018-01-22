@@ -55,3 +55,9 @@
     color: #fff;
     background: #0f88eb;    
 }
+
+.login .box  .findPsw{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%; 
+}
