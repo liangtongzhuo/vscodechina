@@ -30,8 +30,8 @@ class Item extends Component {
         <div className="content">
           <div className="img" style={{ backgroundImage: "url(http://ac-2my9ah1h.clouddn.com/e9daf54e67c3221e9e7e.jpg)" }}> </div>
           <div className="info">
-            椎名林檎今年的演唱會「百鬼夜行」藍光碟：日本亞馬遜：341 人民幣（5850 日元），剛出的時候更貴，400 多人民幣中國：45 人民幣中國的，說的當然是盜版。在中國當然也可以買正版，問題：社會風氣普遍認爲買實體唱片（無論正版盜版）是件傻事，一件落後於時代的事。
-              <Button className="button" onClick={this._clickRead}>
+            {this.props.item.get('data')}
+            <Button className="button" onClick={this._clickRead}>
               阅读全文 &nbsp;
                   <Bottom className="g-color-gray-fill" />
             </Button>

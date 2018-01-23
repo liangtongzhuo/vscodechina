@@ -21,7 +21,7 @@ class Login extends Component {
     this._onBlur = this._onBlur.bind(this)
     this._findPsw = this._findPsw.bind(this)
     this._findSend = this._findSend.bind(this)
-
+    this._backHom = this._backHom.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -40,14 +40,17 @@ class Login extends Component {
       this.props.history.push('/')
     }).catch(error => {
       console.log(error)
-      this._snackBarOpen('网络错误')
+      console.log(error.code)
       this.setState({ progressShow: false })
+      if (error.code === 211) return this._snackBarOpen('没有找到邮箱～')
+      if (error.code === 210) return this._snackBarOpen('密码错误，你好好想想～')
+      return this._snackBarOpen('网络有些问题耶～')
     })
   }
   // 注册
   _clicRegister(e) {
     if (!this.state.buttonLogin) {
-      this._snackBarOpen('请在本页面填写「账号」与「密码」，再点击注册')
+      this._snackBarOpen('请在本页面填写「账号」与「密码」，再点击注册啦～')
       return
     }
     this.setState({ progressShow: true })
@@ -62,10 +65,10 @@ class Login extends Component {
     }).catch(error => {
       this.setState({ progressShow: false })
       if (error.code === 203)
-        return this._snackBarOpen('邮箱已被注册')
+        return this._snackBarOpen('邮箱已被注册，是不是你忘记密码了？')
       if (error.code === 125)
-        return this._snackBarOpen('电子邮箱地址无效')
-      return this._snackBarOpen('网络错误')
+        return this._snackBarOpen('电子邮箱地址无效，不要骗我')
+      return this._snackBarOpen('网络有些问题～')
     })
   }
   // 切换找回密码与登陆界面
@@ -74,11 +77,11 @@ class Login extends Component {
   }
   // 根据邮箱找回密码
   _findSend() {
-    this.setState({ progressShow: true })
     const mail = this.state.mail
     if(!mail){
       return this._snackBarOpen('请输入邮箱')      
     }
+    this.setState({ progressShow: true })    
     AV.User
       .requestPasswordReset(mail)
       .then(success => {
@@ -86,12 +89,11 @@ class Login extends Component {
         this._snackBarOpen('已经向 '+ mail + '发送一封邮件')
       }).catch(error => {
         this.setState({ progressShow: false })
-        console.log(error.code)
         if (error.code === 1)
-        return this._snackBarOpen('稍后在试')
+        return this._snackBarOpen('15 分钟后再试啦～')
         if (error.code === 205)
-        return this._snackBarOpen('找不到电子邮箱地址对应的用户')
-        return this._snackBarOpen('网络异常')
+        return this._snackBarOpen('找不到电子邮箱地址，别骗我啦')
+        return this._snackBarOpen('网络异常，网络又不好了')
       })
   }
   _onGitHub(e) {
@@ -131,10 +133,14 @@ class Login extends Component {
     }
 
   }
-
   // 失去焦点
   _onBlur(e) {
     this._verify()
+  }
+  // back 主页
+  _backHom(){
+    this.props.history.push('/')
+    
   }
   // 渲染 Dom
   render() {
@@ -149,7 +155,7 @@ class Login extends Component {
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         <div className="box" style={this.state.findPsw ? hiddenStyle : visibleStyle}>
-          <h1>VSCodeChina</h1>
+          <h1 onClick={this._backHom}>VSCodeChina</h1>
           <TextField
             required
             error={this.state.buttonMailError}

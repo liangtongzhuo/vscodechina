@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Button, List, ListItem, ListItemText, Menu, MenuItem } from 'material-ui'
 import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
+import Progress from "../component/progress.js"
+import SnackBar from "../component/snackbar.js"
 
 import "github-markdown-css"
 import "./write.css"
 
-const dataContent = '> 打开了总要说些什么  :)   '
+const dataContent = '> 少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)'
 
 class Write extends Component {
   // 加载一次，初始化状态
@@ -27,42 +29,66 @@ class Write extends Component {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-
+    if (!AV.User.current()) {
+      this.props.history.push('/')
+    }
   }
   _onChangeTitle(e) {
     this.setState({ title: e.target.value })
+
   }
   _onChangeContent(e) {
     this.setState({ data: e.target.value })
   }
   _clickSave(e) {
-    // var Atricle = AV.Object.extend('Atricle');
-    // var atricle = new Atricle();
-    // atricle.set('title', '工程师周会');
-    // atricle.set('content', '每周工程师会议，周一下午2点');
-    // atricle.save().then(function (todo) {
-    //   // 成功保存之后，执行其他逻辑.
-    // }, function (error) {
-    //   // 异常处理
-    // });
+    const { title, data } = this.state;
+    if (title.length === 0) {
+      this._snackBarOpen('没有标题，我是不同意你上传的，哼～')
+      return
+    }
+    if (data === dataContent) {
+      this._snackBarOpen('没有内容，又骗我～')
+      return
+    }
 
+    this.setState({ progressShow: true })
+    var Atricle = AV.Object.extend('Atricle')
+    var atricle = new Atricle()
+    atricle.set('title', title)
+    atricle.set('data', data)
+    atricle.set('user', AV.User.current())
+    atricle.save().then(todo => {
+      this.setState({ progressShow: false })
+      this.props.history.push('/')      
+    }).catch((error) => {
+      this.setState({ progressShow: false })
+      this._snackBarOpen('很大概率是网路问题，抱歉')
+    })
   }
   // 选择图片后上传
   _clickUpFile(e) {
+    if (this.refs.upFile.files[0].size / 1000 / 1000 > 1) {
+      this._snackBarOpen('图片大于 1 M，搬不动～')
+      return;
+    }
+    this.setState({ progressShow: true })
     const reader = new FileReader()
     reader.readAsDataURL(this.refs.upFile.files[0])
     const self = this
     reader.onload = function () {
-      new AV.File('0', self._dataToBlob(this.result))
-        .save().then(object => {
-          const data = self.state.data
-          self.setState({
-            data: data + '![](' + object.attributes.url + ')'
-          })
-        }).catch(error => {
-          console.log(error)
-          alert('网络错误')
+
+      const file = new AV.File(AV.User.current().id, self._dataToBlob(this.result))
+      file.save().then(object => {
+        const data = self.state.data
+        self.setState({
+          data: data + `
+![](` + object.attributes.url + `)`,
+          progressShow: false
         })
+      }).catch(error => {
+        self.setState({ progressShow: false })
+        self._snackBarOpen('图片上传失败')
+      })
     }
   }
   // dataURL 转 Blob
@@ -86,8 +112,8 @@ class Write extends Component {
     }
   }
   // 取消了 textarea
-  _blurTextarea(e){
-    if(e.target.value.length === 0) {
+  _blurTextarea(e) {
+    if (e.target.value.length === 0) {
       this.setState({ data: dataContent })
       return
     }
@@ -96,6 +122,8 @@ class Write extends Component {
   render() {
     return (
       <div className="write">
+        <Progress show={this.state.progressShow} />
+        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         <div className="head">
           <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
           <div>
@@ -112,6 +140,12 @@ class Write extends Component {
         </div>
       </div>
     )
+  }
+  _snackBarOpen(content, time = 2000) {
+    this.setState({ snackBarOpen: true, content: content })
+    setTimeout(() => {
+      this.setState({ snackBarOpen: false })
+    }, time)
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {

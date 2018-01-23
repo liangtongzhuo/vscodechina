@@ -24,6 +24,7 @@
 .login .box h1 {
     margin: 0;
     text-align: center;
+    cursor: pointer;
 }
 
 .login .box .item {
