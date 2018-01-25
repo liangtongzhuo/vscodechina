@@ -86,6 +86,4 @@ class Home extends Component {
   }
 }
 
-let matches = '<p>aaaa<img><a>,.,.,.<a></p>'.replace(/<[^>]+>/g, '');
-console.log(matches)
 export default Home

@@ -79,10 +79,16 @@
   font-size: 15px;
   line-height: 1.7em;  
   color: #262626;
+  overflow: hidden;
 }
 
 .home .left .item .content .info:hover{
   color: #8590a6;
+}
+
+.home .left .item .content .info .open{
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .home .left .item .tool{
@@ -90,20 +96,15 @@
 }
 
 .home .button{
-  padding: 2px 3px;
-  margin: 0;
   min-width: 0;
+  margin-right: 3px;
+  line-height:1em;  
   min-height: 0;
   color: #8590a6;  
 }
 
-.home  .button{
-  margin-right: 3px;
-  padding: 5px 10px;
-  min-width: 0;
-  min-height: 0;
-  line-height:1em;  
-  color: #8590a6;  
+.home .read{
+  padding: 5px 2px;
 }
 
 .home .left .item .messagesList{

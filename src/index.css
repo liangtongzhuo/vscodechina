@@ -4,6 +4,7 @@ body {
   padding: 0;
   overflow-y: scroll;  
   background: #f3f3f3;
+  word-break: break-word;
 }
 
 .g-container {
