@@ -38,7 +38,6 @@ class Home extends Component {
   }
   // 渲染 Dom
   render() {
-    // console.log('-----', this.props.match);
     const items = this.state.items.map((item, index) =>
       <Item key={index} item={item} />
     )

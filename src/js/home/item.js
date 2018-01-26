@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 // import AV from "leancloud-storage"
-import TextareaAutosize from 'react-autosize-textarea'
-import { Bottom, Good, Message, Collection, Share, Reply, MessageGood } from "./svg.js"
+import { Bottom, Good, Message, Collection, Share } from "./svg.js"
 import ReactMarkdown from 'react-markdown'
+import MessageComponent from './message.js'
+
 import "github-markdown-css"
 
 class Item extends Component {
@@ -23,10 +24,10 @@ class Item extends Component {
 
     this._clickRead = this._clickRead.bind(this)
     this._readInfo = this._readInfo.bind(this)
-
+    this._clickMessage = this._clickMessage.bind(this)
 
   }
-
+  
   render() {
     return (
       <div className="item">
@@ -54,8 +55,8 @@ class Item extends Component {
               </Button>
 
           <Button className="button" onClick={this._clickMessage}>
-            <Message className="g-color-gray-fill" />&nbsp; 30 条评论
-              </Button>
+            <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : '30 条评论'}
+          </Button>
 
           <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
@@ -65,36 +66,7 @@ class Item extends Component {
             <Share className="g-color-gray-fill" />&nbsp; 分享
               </Button>
         </div>
-
-        <div className="messagesList">
-          <div className="messagesCount">3 条留言</div>
-          <div className="messages">
-            {/*  留言 */}
-            <div>
-              <div className="head">
-                <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="头像" />
-                <a>梁萌萌</a>
-                <span>五天前</span>
-              </div>
-              <div className="content">真的超级萌萌</div>
-              <div className="messagetool">
-                <Button className="button" onClick={this._clickGood}>
-                  <MessageGood className="g-color-gray-fill" />&nbsp; 100 赞
-              </Button>
-                <Button className="button" onClick={this._clickGood}>
-                  <Reply className="g-color-gray-fill" />&nbsp; 回复
-              </Button>
-              </div>
-            </div>
-            {/*  /留言 */}
-            <div className="replyMessage">
-              <TextareaAutosize placeholder="留言的人运气不会差" />
-              <Button className="" onClick={this._clickGood}>
-                发送
-              </Button>
-            </div>
-          </div>
-        </div>
+        <MessageComponent messagesShow = {this.state.messagesShow } item={this.props.item}/>
       </div>
     )
   }
@@ -104,7 +76,7 @@ class Item extends Component {
         <ReactMarkdown source={this.state.markSource} className="markdown-body markdown" escapeHtml={false} />
         <div className="open">
           <Button className="button read" onClick={this._clickRead}>
-          &nbsp;收&nbsp;起&nbsp;
+            &nbsp;收&nbsp;起&nbsp;
         </Button>
         </div>
       </div>)
@@ -117,29 +89,29 @@ class Item extends Component {
         </Button>
       </div>)
     }
-
-
   }
+
   // 阅读全文
-  _clickRead() {
+  _clickRead(e) {
     console.log('-----阅读')
     const showRead = !this.state.showRead
     this.setState({ showRead })
   }
   // 点赞
-  _clickGood() {
+  _clickGood(e) {
     console.log('-----点赞')
   }
   // 展开评论
-  _clickMessage() {
-    console.log('-----展开评论')
+  _clickMessage(e) {
+    const messagesShow = !this.state.messagesShow
+    this.setState({ messagesShow })
   }
   // 收藏
-  _clickCollection() {
+  _clickCollection(e) {
     console.log('-----收藏')
   }
   // 分享
-  _clickShare() {
+  _clickShare(e) {
     console.log('-----分享')
   }
 }

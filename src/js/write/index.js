@@ -57,9 +57,13 @@ class Write extends Component {
     atricle.set('title', title)
     atricle.set('data', data)
     atricle.set('user', AV.User.current())
+    // 新建一个 ACL 实例
+    const acl = new AV.ACL()
+    acl.setPublicReadAccess(true)
+    acl.setWriteAccess(AV.User.current(),true)
     atricle.save().then(todo => {
       this.setState({ progressShow: false })
-      this.props.history.push('/')      
+      this.props.history.push('/')
     }).catch((error) => {
       this.setState({ progressShow: false })
       this._snackBarOpen('很大概率是网路问题，抱歉')
