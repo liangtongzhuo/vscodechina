@@ -25,7 +25,6 @@ class Item extends Component {
     this._clickRead = this._clickRead.bind(this)
     this._readInfo = this._readInfo.bind(this)
     this._clickMessage = this._clickMessage.bind(this)
-
   }
   
   render() {

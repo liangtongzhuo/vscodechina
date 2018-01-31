@@ -32,7 +32,7 @@ class MessageComponent extends Component {
       this.setState({
         messages: messages,
         progressShow: false
-      });
+      })
     }).catch((error) => {
       this._snackBarOpen('讨厌，网络错误了')
       this.setState({ progressShow: false })
@@ -49,14 +49,14 @@ class MessageComponent extends Component {
           <a>梁萌萌</a>
           <span>五天前</span>
         </div>
-        <div className="content">真的超级萌萌</div>
+        <div className="content">{item.get('message')}</div>
         <div className="messagetool">
           <Button className="button" onClick={this._clickGood}>
             <MessageGood className="g-color-gray-fill" />&nbsp; 100 赞
-  </Button>
+          </Button>
           <Button className="button" onClick={this._clickGood}>
             <Reply className="g-color-gray-fill" />&nbsp; 回复
-  </Button>
+          </Button>
         </div>
       </div>)
 
@@ -72,7 +72,7 @@ class MessageComponent extends Component {
           </div>
           {/*  /留言 */}
           <div className="replyMessage">
-            <TextareaAutosize onChange={this._textarea} placeholder="留言的人运气不会差" />
+            <TextareaAutosize value={this.state.message} onChange={this._textarea} placeholder="留言的人运气不会差" />
             <Button className="" onClick={this._clickSend}>
               发送
           </Button>
@@ -103,6 +103,7 @@ class MessageComponent extends Component {
     mes.save().then(mess => {
       this.setState({ progressShow: false, message: '' })
       this._snackBarOpen('欧耶～发送成功')
+      this._net()
     }).catch((error) => {
       this.setState({ progressShow: false })
       this._snackBarOpen('讨厌，网络错误了')
@@ -110,9 +111,7 @@ class MessageComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.messagesShow === true) {
-      this._net()
-    }
+    if (nextProps.messagesShow === true) this._net()
   }
 }
 
