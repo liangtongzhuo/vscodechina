@@ -3,6 +3,7 @@ import { Button } from 'material-ui'
 import AV from "leancloud-storage"
 import TextareaAutosize from 'react-autosize-textarea'
 import ReactMarkdown from 'react-markdown'
+import md5 from 'blueimp-md5'
 import "github-markdown-css"
 import { Reply, MessageGood } from "./svg.js"
 import Progress from "../component/progress.js"
@@ -32,7 +33,6 @@ class MessageComponent extends Component {
     query.descending('createdAt')
     query.include('user')
     query.find().then((messages) => {
-
       messages = messages.map(item => {
         if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
           item.likeBool = true
@@ -56,7 +56,7 @@ class MessageComponent extends Component {
     const messages = this.state.messages.map((item, index) =>
       <div key={index}>
         <div className="head">
-          <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="头像" />
+          <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="头像" />
           <a>梁萌萌</a>
           <span>五天前</span>
         </div>

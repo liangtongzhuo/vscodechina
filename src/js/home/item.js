@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
+import md5 from 'blueimp-md5'
 import { Bottom, Good, Message, Collection, Share } from "./svg.js"
 import ReactMarkdown from 'react-markdown'
 import MessageComponent from './message.js'
@@ -42,7 +43,7 @@ class Item extends Component {
         </div>
         {/* 用户信息 */}
         <div className="user">
-          <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="header" />
+          <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(this.props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="header" />
           <Link className="name" to="/"> 梁同桌 </Link>
           <Link className="github" to="/"> GitHub </Link>
         </div>

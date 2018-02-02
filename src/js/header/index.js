@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Button, IconButton } from 'material-ui'
 import AV from "leancloud-storage"
+import md5 from 'blueimp-md5'
 
 import "./header.css"
 import { Bell } from "./svg.js"
@@ -42,12 +43,13 @@ class Header extends Component {
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
-        <img className="headimg" src="http://ac-2my9ah1h.clouddn.com/d9908c3a09d563feb9aa.jpg" alt="header" />
+        <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'} alt="header" />
       </div>) :
       (<div className="right">
         <Button className="button"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
       </div>)
   }
+
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
 

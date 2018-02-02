@@ -26,6 +26,7 @@ class Home extends Component {
     if (page) query.contains('tag', decodeURI(page)) //注意转码    
     query.limit(1000)
     query.descending('createdAt')
+    query.include('user')
     query.find().then((items) => {
       this.setState({
         items: items,
