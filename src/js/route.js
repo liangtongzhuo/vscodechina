@@ -3,8 +3,7 @@
  */
 import React, { Component } from 'react'
 import {
-  BrowserRouter as Router,
-  Switch, Route, Redirect
+  BrowserRouter as Router, Route
 } from 'react-router-dom'
 import Header from "./header"
 import Home from "./home"
@@ -15,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
           <div>
             {/* 头 */}
             <Route exact path="/:page?" component={Header} />
@@ -25,9 +23,7 @@ class App extends Component {
             <Route exact path="/write/create/:id?" component={Write} />
             {/* 登陆 */}
             <Route exact path="/other/login" component={Login} />
-            <Redirect to="/" />
           </div>
-        </Switch>
       </Router>
     );
   }

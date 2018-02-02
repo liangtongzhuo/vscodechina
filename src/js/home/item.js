@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
-// import AV from "leancloud-storage"
+import AV from "leancloud-storage"
 import { Bottom, Good, Message, Collection, Share } from "./svg.js"
 import ReactMarkdown from 'react-markdown'
 import MessageComponent from './message.js'
@@ -20,11 +20,17 @@ class Item extends Component {
     const imgObj = props.item.get('data').match(/!\[(.*?)\]\((.*?)\)/) || []
     const imgUrl = imgObj.length >= 2 ? imgObj[2] : ''
 
-    this.state = { title, data, imgUrl, markSource: props.item.get('data') }
+    let likeBool = false;
+    if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
+      likeBool = true
+    }
+
+    this.state = { title, data, imgUrl, markSource: props.item.get('data'),like: props.item.get('like'), likeBool: likeBool}
 
     this._clickRead = this._clickRead.bind(this)
     this._readInfo = this._readInfo.bind(this)
     this._clickMessage = this._clickMessage.bind(this)
+    this._clickGood = this._clickGood.bind(this)    
   }
   
   render() {
@@ -49,8 +55,8 @@ class Item extends Component {
         </div>
         {/* 按钮工具 */}
         <div className="tool">
-          <Button className="button" onClick={this._clickGood}>
-            <Good className="g-color-gray-fill" />&nbsp; 100 赞
+          <Button className={this.state.likeBool ?  "button buttonBlue" : "button"}  onClick={this._clickGood}>
+            <Good className= {this.state.likeBool ?  "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.likeBool ? this.state.like + 1 : this.state.like } 赞
               </Button>
 
           <Button className="button" onClick={this._clickMessage}>
@@ -92,13 +98,20 @@ class Item extends Component {
 
   // 阅读全文
   _clickRead(e) {
-    console.log('-----阅读')
     const showRead = !this.state.showRead
     this.setState({ showRead })
   }
   // 点赞
   _clickGood(e) {
-    console.log('-----点赞')
+    const likeBool = this.state.likeBool 
+    this.setState({likeBool :!likeBool})
+    const id = this.props.item.id
+    AV.Cloud.run('atricleLike', { id }).then(result => {
+
+    }).catch(err => {
+      this._snackBarOpen('讨厌，网络错误了')
+      console.log(err)
+    })
   }
   // 展开评论
   _clickMessage(e) {
