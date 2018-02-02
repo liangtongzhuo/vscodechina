@@ -56,7 +56,7 @@ class Item extends Component {
         {/* 按钮工具 */}
         <div className="tool">
           <Button className={this.state.likeBool ?  "button buttonBlue" : "button"}  onClick={this._clickGood}>
-            <Good className= {this.state.likeBool ?  "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.likeBool ? this.state.like + 1 : this.state.like } 赞
+            <Good className= {this.state.likeBool ?  "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.like } 赞
               </Button>
 
           <Button className="button" onClick={this._clickMessage}>
@@ -103,8 +103,10 @@ class Item extends Component {
   }
   // 点赞
   _clickGood(e) {
-    const likeBool = this.state.likeBool 
-    this.setState({likeBool :!likeBool})
+    const likeBool = !this.state.likeBool 
+    let like = likeBool ? this.state.like + 1 : this.state.like - 1
+
+    this.setState({likeBool , like})
     const id = this.props.item.id
     AV.Cloud.run('atricleLike', { id }).then(result => {
 

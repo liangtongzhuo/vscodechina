@@ -63,7 +63,7 @@ class MessageComponent extends Component {
         <ReactMarkdown source={item.get('message')} className="markdown-body content" escapeHtml={false} />
         <div className="messagetool">
           <Button className={item.likeBool ? 'button buttonColor' : 'button '} onClick={this._clickGood.bind(this, index)}>
-            <MessageGood className={item.likeBool ? 'g-color-white-fill' : 'g-color-gray-fill'} />&nbsp; {item.likeBool ?  item.get('like')+1 : item.get('like')} 赞
+            <MessageGood className={item.likeBool ? 'g-color-white-fill' : 'g-color-gray-fill'} />&nbsp; {item.get('like')} 赞
           </Button>
           <Button className="button" onClick={this._XXX}>
             <Reply className="g-color-gray-fill" />&nbsp; 回复
@@ -125,12 +125,18 @@ class MessageComponent extends Component {
 
     const messages = this.state.messages
     const bool = messages[index].likeBool
+    const like = messages[index].get('like')
     messages[index].likeBool = !bool
 
+    if (bool) {
+      messages[index].set('like', like + 1);
+    } else {
+      messages[index].set('like', like - 1);
+    }
     this.setState({ messages })
     const id = this.state.messages[index].id
     AV.Cloud.run('messageLike', { id }).then(result => {
-      console.log(result)
+      // console.log(result)
     }).catch(err => {
       this._snackBarOpen('讨厌，网络错误了')
       console.log(err)
