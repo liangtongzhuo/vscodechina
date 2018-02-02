@@ -152,7 +152,7 @@
 
 .home .left .item .messagesList .messages .content{
   padding: 15px;  
-  /* cursor: text; */
+  overflow: hidden;
 }
 
 .home .left .item .messagesList .messages .messagetool{
@@ -163,6 +163,11 @@
 
 .home .left .item .messagesList .messages .messagetool button{
   padding: 7px 8px;
+}
+
+.home .left .item .messagesList .messages .messagetool .buttonColor{
+  background-color: #0f88eb;
+  color: #ffffff;
 }
 
 .home .left .item .messagesList .messages .replyMessage{

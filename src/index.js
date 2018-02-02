@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AV from "leancloud-storage";
-import App from './js';
+import App from './js/route.js';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 

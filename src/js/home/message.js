@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Button } from 'material-ui'
 import AV from "leancloud-storage"
 import TextareaAutosize from 'react-autosize-textarea'
+import ReactMarkdown from 'react-markdown'
+import "github-markdown-css"
 import { Reply, MessageGood } from "./svg.js"
 import Progress from "../component/progress.js"
 import SnackBar from "../component/snackbar.js"
@@ -28,7 +30,16 @@ class MessageComponent extends Component {
     const query = new AV.Query('Message')
     query.equalTo('atricle', this.props.item);
     query.descending('createdAt')
+    query.include('user')
     query.find().then((messages) => {
+
+      messages = messages.map(item => {
+        if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
+          item.likeBool = true
+        }
+        return item
+      })
+
       this.setState({
         messages: messages,
         progressShow: false
@@ -49,12 +60,12 @@ class MessageComponent extends Component {
           <a>梁萌萌</a>
           <span>五天前</span>
         </div>
-        <div className="content">{item.get('message')}</div>
+        <ReactMarkdown source={item.get('message')} className="markdown-body content" escapeHtml={false} />
         <div className="messagetool">
-          <Button className="button" onClick={this._clickGood}>
-            <MessageGood className="g-color-gray-fill" />&nbsp; 100 赞
+          <Button className={item.likeBool ? 'button buttonColor' : 'button '} onClick={this._clickGood.bind(this, index)}>
+            <MessageGood className={item.likeBool ? 'g-color-white-fill' : 'g-color-gray-fill'} />&nbsp; {item.get('like')} 赞
           </Button>
-          <Button className="button" onClick={this._clickGood}>
+          <Button className="button" onClick={this._XXX}>
             <Reply className="g-color-gray-fill" />&nbsp; 回复
           </Button>
         </div>
@@ -109,7 +120,30 @@ class MessageComponent extends Component {
       this._snackBarOpen('讨厌，网络错误了')
     });
   }
+  // 点赞
+  _clickGood(index, e) {
 
+    const messages = this.state.messages
+    const bool = messages[index].likeBool
+    const like = messages[index].get('like') || 0
+    if (bool) {
+      messages[index].set('like', like - 1)
+    }else {
+      messages[index].set('like', like + 1)
+    }
+    messages[index].likeBool = !bool
+
+
+    this.setState({ progressShow: true, messages })
+    const id = this.state.messages[index].id
+    AV.Cloud.run('messageLike', { id }).then(result => {
+      this.setState({ progressShow: false })
+    }).catch(err => {
+      this.setState({ progressShow: false })
+      this._snackBarOpen('讨厌，网络错误了')
+      console.log(err)
+    })
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.messagesShow === true) this._net()
   }
