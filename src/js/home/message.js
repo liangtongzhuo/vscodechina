@@ -131,7 +131,6 @@ class MessageComponent extends Component {
   }
   // 点赞
   _clickGood(index, e) {
-
     const messages = this.state.messages
     const bool = messages[index].likeBool
     const like = messages[index].get('like')
