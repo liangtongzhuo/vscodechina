@@ -119,6 +119,15 @@ class MessageComponent extends Component {
       this.setState({ progressShow: false })
       this._snackBarOpen('讨厌，网络错误了')
     });
+
+
+    // 文章增加留言数字
+    AV.Cloud.run('atricleMessage', { id:this.props.item.id }).then(result => {
+      // console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
+
   }
   // 点赞
   _clickGood(index, e) {

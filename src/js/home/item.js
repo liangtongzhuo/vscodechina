@@ -61,7 +61,7 @@ class Item extends Component {
               </Button>
 
           <Button className="button" onClick={this._clickMessage}>
-            <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : '30 条评论'}
+            <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.props.item.get('messageCount') + ' 条评论'}
           </Button>
 
           <Button className="button" onClick={this._clickCollection}>
