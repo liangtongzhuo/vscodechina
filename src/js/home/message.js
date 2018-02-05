@@ -106,26 +106,19 @@ class MessageComponent extends Component {
       return
     }
     this.setState({ progressShow: true })
-    const Message = AV.Object.extend('Message')
-    const mes = new Message()
-    mes.set('message', message)
-    mes.set('atricle', this.props.item)
-    mes.set('user', AV.User.current())
-    mes.save().then(mess => {
+    // 文章增加留言数字
+    AV.Cloud.run('atricleMessage', {
+      message: message,
+      atricleId: this.props.item.id
+    }).then(result => {
       this.setState({ progressShow: false, message: '' })
       this._snackBarOpen('欧耶～发送成功')
       this._net()
-    }).catch((error) => {
+      this.props.messageSend()
+    }).catch(err => {
       this.setState({ progressShow: false })
       this._snackBarOpen('讨厌，网络错误了')
-    });
-
-
-    // 文章增加留言数字
-    AV.Cloud.run('atricleMessage', { id:this.props.item.id }).then(result => {
-      // console.log(result)
-    }).catch(err => {
-      console.log(err)
+      console.log(err)      
     })
 
   }
@@ -135,7 +128,6 @@ class MessageComponent extends Component {
     const bool = messages[index].likeBool
     const like = messages[index].get('like')
     messages[index].likeBool = !bool
-
     if (bool) {
       messages[index].set('like', like + 1);
     } else {
@@ -144,7 +136,6 @@ class MessageComponent extends Component {
     this.setState({ messages })
     const id = this.state.messages[index].id
     AV.Cloud.run('messageLike', { id }).then(result => {
-      // console.log(result)
     }).catch(err => {
       this._snackBarOpen('讨厌，网络错误了')
       console.log(err)
