@@ -20,7 +20,7 @@ class Home extends Component {
   componentDidMount() {
     this._net(this.props.match.params.page)
   }
-  _net(page) {
+  _net(page) {    
     this.setState({ progressShow: true })
     const query = new AV.Query('Atricle')
     if (page) query.contains('tag', decodeURI(page)) //注意转码    
@@ -51,9 +51,18 @@ class Home extends Component {
         </div>
         <div className="right">
           <div className="card">
-            提示<br />
-            用于 Visual Studio Code
+            友情提示<br />
+            少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
           </div>
+          <footer className="footer">
+            <a className="footer-item"  href="http://www.liangtongzhuo.com">梁同桌博客</a>
+            <span className="footer-dot"></span>
+            <a className="footer-item"  href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub</a>            
+            <span className="footer-dot"></span>
+            <a className="footer-item"  href="http://www.liangtongzhuo.com">后端 GitHub</a>                        
+            <span className="footer-dot"></span>
+            <a className="footer-item"  href="https://leancloud.cn">基于 LeanCloud</a>                        
+          </footer>
         </div>
       </div >
     )

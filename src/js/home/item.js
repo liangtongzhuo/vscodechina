@@ -47,7 +47,7 @@ class Item extends Component {
         <div className="user">
           <div className="left">
             <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(this.props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="header" />
-            <Link className="name" to="/"> 梁同桌 </Link>
+            <Link className="name" to="/"> {this.props.item.get('user').get('name')} </Link>
             <Link className="github" to="/"> GitHub </Link>
           </div>
           <div className="time">

@@ -59,7 +59,7 @@ class MessageComponent extends Component {
       <div key={index}>
         <div className="head">
           <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="头像" />
-          <a>梁萌萌</a>
+          <a>{item.get('user').get('name')}</a>
           <span>{this._getDateDiff(item.createdAt)}</span>
         </div>
         <ReactMarkdown source={item.get('message')} className="markdown-body content" escapeHtml={false} />
@@ -72,7 +72,6 @@ class MessageComponent extends Component {
           </Button>
         </div>
       </div>)
-
     return (
       <div className="messagesList" style={{ display: this.props.messagesShow ? '' : 'none' }}>
         <Progress show={this.state.progressShow} />

@@ -52,7 +52,7 @@ class Header extends Component {
   _userShow() {
     return AV.User.current() ?
       (<div className="right">
-        <Button className="button"><NavLink to="/write/create" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
+        <Button className="button"><NavLink to="other/write/" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
@@ -74,7 +74,7 @@ class Header extends Component {
   _handleClose(i,e) {
     this.setState({ menuShow: false })
     if(i === 0){
-      console.log('信息')
+      this.props.history.push('/me')
       return
     }
     if(i === 1){
@@ -82,7 +82,8 @@ class Header extends Component {
       return
     }
     if(i === 2){
-      console.log('退出')      
+      AV.User.logOut()
+      this.props.history.push('/')         
       return
     }
   }

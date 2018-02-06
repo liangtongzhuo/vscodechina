@@ -1,101 +1,43 @@
-.write .head{
-    height: 50px;
-    box-shadow: 0 1px 3px 0 rgba(0,34,77,.1);
-    background: #fff; 
-    padding: 0 20px;
-    display: flex;  
-    overflow: hidden;      
+.me .content{
+    margin-top: 60px;
+    padding: 20px 5% 55px 5%;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    width: 70%;
+    box-sizing: border-box;
 }
 
-.write .head input{
+@media (max-width: 1024px) {
+    .me .content{
+        width: 100%;
+    }
+}
+
+.me .content .cell {
     display: flex;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    outline: none;
-    border: none;
-    font-weight: 700;
-    color: #000;
-    flex: 1;
+    align-items: flex-end;    
+    margin-top: 35px;
 }
 
-.write .head >div {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    flex: 1;
+
+
+.me .content .cell .item{
+    width: 100%;
 }
 
-.write .head div .button{
-    margin: 0 10px;
-    padding: 10px 20px;
-    min-width: 0;
-    height: 30px;
+.me .content .button{
+    color: #ffffff;    
     background: #0f88eb;
-    color: white;
+    margin-top: 10px        
 }
 
-.write .head div .upfile{
-    position: relative;    
-    margin: 0 10px;
-    padding: 10px 20px;
-    width: 70px;
-    height: 30px;
-    line-height: 30px;
-    background: #f3f3f3;
-    cursor:pointer;    
-}
-
-.write .head div .upfile input{
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 50px;
-    width: 110px;
-    opacity: 0;
-    cursor:pointer;    
-}
-
-.write .head div .menu{
-    margin-right: 10px;
-    background: #f3f3f3;
-    cursor:pointer;    
-}
-
-
-.write .content {
+.me .content .cell .divb{
     display: flex;
-    position: absolute;
-    height: calc(100% - 50px);
-    width: 100%;
+    margin-left: 5%;    
 }
 
-.write .content .wr{
-    display: flex;
-    flex: 1 ;
-    box-sizing: border-box;
-}
 
-.write .content .wr textarea{
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    font-size: 15px;
-    line-height: 25px;
-    resize: none;
-    outline: none;
-    border: none;
-    background: #f3f3f3;
-    box-sizing: border-box;
-}
-
-.write .content .show{
-    overflow: hidden;
-    display: inline-block;
-    flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
+.me .content .b{
+    margin-top: 10px
 }

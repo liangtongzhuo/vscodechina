@@ -60,6 +60,7 @@ class Login extends Component {
     user.setUsername(mail)
     user.setEmail(mail)
     user.setPassword(password)
+    user.set('name', mail.split('@')[0])    
     user.signUp().then(loginedUser => {
       this.props.history.push('/')
     }).catch(error => {
@@ -86,7 +87,7 @@ class Login extends Component {
       .requestPasswordReset(mail)
       .then(success => {
         this.setState({ progressShow: false })
-        this._snackBarOpen('已经向 '+ mail + '发送一封邮件')
+        this._snackBarOpen('发送一封邮件, 请及时验证邮箱，及时验证邮箱，验证邮箱，重要说三遍啦', 5000)
       }).catch(error => {
         this.setState({ progressShow: false })
         if (error.code === 1)

@@ -219,3 +219,27 @@
   background: #fff;
   padding: 10px;
 }
+
+.home .right  .footer{
+  margin-left: 13px;
+  margin-top: 5px;  
+}
+
+.home .right  .footer .footer-dot{
+  font-size: 13px;
+  line-height: 2;
+    color: #8590a6;
+}
+
+.home .right  .footer .footer-dot:after {
+  margin: 0 5px;
+  content: "\B7";
+}
+
+
+.home .right .footer .footer-item{
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  color: #8590a6;
+}

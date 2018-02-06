@@ -3,27 +3,32 @@
  */
 import React, { Component } from 'react'
 import {
-  BrowserRouter as Router, Route
+  BrowserRouter as Router, Route, Switch
 } from 'react-router-dom'
 import Header from "./header"
 import Home from "./home"
 import Write from "./write"
 import Login from "./login"
+import Me from "./me"
 
 class App extends Component {
   render() {
     return (
       <Router>
-          <div>
-            {/* 头 */}
-            <Route exact path="/:page?" component={Header} />
+        <div>
+          {/* 头 */}
+          <Route exact path="/:page?" component={Header} />
+          <Switch>
+            {/* 自己信息设置 */}
+            <Route exact path="/me" component={Me} />
             {/* 文章列表 */}
             <Route exact path="/:page?" component={Home} />
-            {/* 编辑页面 */}
-            <Route exact path="/write/create/:id?" component={Write} />
-            {/* 登陆 */}
-            <Route exact path="/other/login" component={Login} />
-          </div>
+          </Switch>
+          {/* 写文章界面 */}
+          <Route exact path="/other/write/:id?" component={Write} />
+          {/* 登陆 */}
+          <Route exact path="/other/login" component={Login} />
+        </div>
       </Router>
     );
   }
