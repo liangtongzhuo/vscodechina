@@ -17,6 +17,7 @@ class MessageComponent extends Component {
     this._textarea = this._textarea.bind(this)
     this._clickSend = this._clickSend.bind(this)
     this._net = this._net.bind(this)
+    this._getDateDiff = this._getDateDiff.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -29,8 +30,9 @@ class MessageComponent extends Component {
   _net() {
     this.setState({ progressShow: true })
     const query = new AV.Query('Message')
-    query.equalTo('atricle', this.props.item);
-    query.descending('createdAt')
+    query.equalTo('atricle', this.props.item)
+    query.addDescending('like')
+    query.addDescending('createdAt')
     query.include('user')
     query.find().then((messages) => {
       messages = messages.map(item => {
@@ -58,7 +60,7 @@ class MessageComponent extends Component {
         <div className="head">
           <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="头像" />
           <a>梁萌萌</a>
-          <span>五天前</span>
+          <span>{this._getDateDiff(item.createdAt)}</span>
         </div>
         <ReactMarkdown source={item.get('message')} className="markdown-body content" escapeHtml={false} />
         <div className="messagetool">
@@ -106,7 +108,7 @@ class MessageComponent extends Component {
       return
     }
     this.setState({ progressShow: true })
-    // 文章增加留言数字
+    // 增加留言
     AV.Cloud.run('atricleMessage', {
       message: message,
       atricleId: this.props.item.id
@@ -118,7 +120,7 @@ class MessageComponent extends Component {
     }).catch(err => {
       this.setState({ progressShow: false })
       this._snackBarOpen('讨厌，网络错误了')
-      console.log(err)      
+      console.log(err)
     })
 
   }
@@ -129,9 +131,9 @@ class MessageComponent extends Component {
     const like = messages[index].get('like')
     messages[index].likeBool = !bool
     if (bool) {
-      messages[index].set('like', like + 1);
-    } else {
       messages[index].set('like', like - 1);
+    } else {
+      messages[index].set('like', like + 1);
     }
     this.setState({ messages })
     const id = this.state.messages[index].id
@@ -143,6 +145,38 @@ class MessageComponent extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.messagesShow === true) this._net()
+  }
+  _getDateDiff(dateTimeStamp) {
+    const minute = 1000 * 60
+    const hour = minute * 60
+    const day = hour * 24
+    const month = day * 30
+    const now = new Date().getTime()
+    const diffValue = now - dateTimeStamp
+    if (diffValue < 0) return
+    const monthC = diffValue / month
+    const weekC = diffValue / (7 * day)
+    const dayC = diffValue / day
+    const hourC = diffValue / hour
+    const minC = diffValue / minute
+
+    if (monthC >= 1) {
+      return parseInt(monthC, 10) + "月前"
+    }
+    else if (weekC >= 1) {
+      return parseInt(weekC, 10) + "周前"
+    }
+    else if (dayC >= 1) {
+      return parseInt(dayC, 10) + "天前"
+    }
+    else if (hourC >= 1) {
+      return parseInt(hourC, 10) + "小时前"
+    }
+    else if (minC >= 1) {
+      return parseInt(minC, 10) + "分钟前"
+    } else {
+      return "刚刚"
+    }
   }
 }
 

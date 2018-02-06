@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Button, IconButton } from 'material-ui'
+import { Button, IconButton, Menu, MenuItem } from 'material-ui'
 import AV from "leancloud-storage"
 import md5 from 'blueimp-md5'
 
@@ -10,7 +10,10 @@ import { Bell } from "./svg.js"
 class Header extends Component {
   constructor(props, context) {
     super(props)
-    this.state = {}
+    this.state = { anchorEl: null, menuShow: false }
+    this._clickHead = this._clickHead.bind(this)
+    this._handleClose = this._handleClose.bind(this)
+    this._handleMenuClose = this._handleMenuClose.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -18,7 +21,6 @@ class Header extends Component {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-
   }
   render() {
     return (
@@ -33,6 +35,17 @@ class Header extends Component {
           </nav>
           {this._userShow()}
         </div>
+
+        <Menu
+          open={this.state.menuShow}
+          anchorEl={this.state.anchorEl}
+          onClick={this._handleMenuClose}
+          id="menuList"
+        >
+          <MenuItem onClick={this._handleClose.bind(this,0)}>个人信息</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this,1)}>文章</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this,2)}>退出</MenuItem>
+        </Menu>
       </header>
     )
   }
@@ -43,13 +56,40 @@ class Header extends Component {
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
-        <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'} alt="header" />
+        <img className="headimg" onClick={this._clickHead} src={'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'} alt="header" />
       </div>) :
       (<div className="right">
         <Button className="button"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
       </div>)
   }
-
+  // 点击了头像
+  _clickHead(e) {
+    const { menuShow } = this.state
+    this.setState({
+      anchorEl: e.currentTarget,
+      menuShow: !menuShow
+    })
+  }
+  // 点击 item
+  _handleClose(i,e) {
+    this.setState({ menuShow: false })
+    if(i === 0){
+      console.log('信息')
+      return
+    }
+    if(i === 1){
+      console.log('文章')      
+      return
+    }
+    if(i === 2){
+      console.log('退出')      
+      return
+    }
+  }
+  // 按钮组
+  _handleMenuClose() {
+    this.setState({ menuShow: false })
+  }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
 
