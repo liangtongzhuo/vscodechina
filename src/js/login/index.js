@@ -219,7 +219,7 @@ class Login extends Component {
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
+    console.log(123)
     //  github 回调 code
     const {code} = this.props.match.params
     if (code) {

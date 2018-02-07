@@ -55,6 +55,7 @@
     padding: 0;
     min-width: 0;
     min-height: 0;
+    width: 80px;
 }
 
 .header .right .a{
@@ -93,10 +94,9 @@
         display: flex;
         justify-content: center;        
     }
-
     .header .right .buttonw{
         display: none;
-    }    
+    }
     .header .right .bell {
         margin: 0 20px 0 0;
     }
