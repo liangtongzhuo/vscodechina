@@ -17,7 +17,6 @@ class Header extends Component {
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
-
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
@@ -26,6 +25,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="g-container container">
+          <div className="left">
           <Link className="logo" to="/"> VSCodeChina </Link>
           <nav>
             <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 全部 </NavLink></Button>
@@ -33,6 +33,7 @@ class Header extends Component {
             <Button className="button"><NavLink to="/shard" className="g-color-gray a" activeClassName="selected"> 分享 </NavLink></Button>
             <Button className="button"><NavLink to="/issue" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
           </nav>
+          </div>
           {this._userShow()}
         </div>
 
@@ -52,14 +53,14 @@ class Header extends Component {
   _userShow() {
     return AV.User.current() ?
       (<div className="right">
-        <Button className="button"><NavLink to="other/write/" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
+        <Button className="button buttonw "><NavLink to="other/write/" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
         <img className="headimg" onClick={this._clickHead} src={'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'} alt="header" />
       </div>) :
       (<div className="right">
-        <Button className="button"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
+        <Button className="button login"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
       </div>)
   }
   // 点击了头像

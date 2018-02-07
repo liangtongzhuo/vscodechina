@@ -62,6 +62,8 @@
   text-align: left;
   color: #8590a6;
   font-size: 15px;
+  width: 100px;
+  text-align: right;
 }
 
 .home .left .item .h1{
@@ -191,11 +193,12 @@
 .home .left .item .messagesList .messages .replyMessage{
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
 }
 
 .home .left .item .messagesList .messages .replyMessage textarea{
+  flex: 1;
   height: 35px;
-  width: 84%;
   margin: 10px;;
   padding: 7px 7px 7px 7px;
   border: 1px solid #e7eaf1;
@@ -205,8 +208,7 @@
 }
 
 .home .left .item .messagesList .messages .replyMessage button{
-  margin-bottom: 10px;
-  padding: 10px 20px;
+  margin: 10px 10px 10px 0;
   min-width: 0;
   height: 30px;
   background: #0f88eb;
@@ -218,6 +220,9 @@
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
   background: #fff;
   padding: 10px;
+  color: #8590a6;
+  font-size: 14px;
+  line-height: 25px;
 }
 
 .home .right  .footer{
@@ -242,4 +247,28 @@
   display: inline-block;
   font-size: 13px;
   color: #8590a6;
+}
+
+
+@media (max-width: 1024px) {
+  .home{
+    padding-top: 135px;
+  }
+  .home .left{
+    width: 100%;
+  }
+  .home .right{
+    display: none;
+  }
+  .home .left .item >.content{
+    flex-wrap: wrap;
+  }
+
+  .home .left .item .content .img {
+    width: 100%;
+    height: 150px;
+  }
+  .home .left .item .content .info{
+    margin-top: 15px;
+  }
 }

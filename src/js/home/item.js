@@ -4,10 +4,11 @@ import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
 import md5 from 'blueimp-md5'
-import { Bottom, Good, Message, Collection, Share } from "./svg.js"
+import { Bottom, Good, Message, Share } from "./svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
 import MessageComponent from './message.js'
-
+import Progress from "../component/progress.js"
+import SnackBar from "../component/snackbar.js"
 import "github-markdown-css"
 
 class Item extends Component {
@@ -22,7 +23,7 @@ class Item extends Component {
     const imgUrl = imgObj.length >= 2 ? imgObj[2] : ''
 
     let likeBool = false;
-    if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
+    if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
       likeBool = true
     }
     const messageCount = this.props.item.get('messageCount')
@@ -34,11 +35,14 @@ class Item extends Component {
     this._clickMessage = this._clickMessage.bind(this)
     this._clickGood = this._clickGood.bind(this)
     this._messageSend = this._messageSend.bind(this)
+    this._snackBarOpen = this._snackBarOpen.bind(this)
   }
 
   render() {
     return (
       <div className="item">
+        <Progress show={this.state.progressShow} />
+        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         {/* 简介 */}
         <div>
           <span className="span">{this.props.item.get('tag')}</span>
@@ -51,7 +55,7 @@ class Item extends Component {
             <Link className="github" to="/"> GitHub </Link>
           </div>
           <div className="time">
-            {this._getDateDiff( this.props.item.createdAt)}
+            {this._getDateDiff(this.props.item.createdAt)}
           </div>
         </div>
         {/* 标题 */}
@@ -71,9 +75,9 @@ class Item extends Component {
             <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
           </Button>
 
-          <Button className="button" onClick={this._clickCollection}>
+          {/* <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
-              </Button>
+              </Button> */}
 
           <Button className="button" onClick={this._clickShare}>
             <Share className="g-color-gray-fill" />&nbsp; 分享
@@ -104,6 +108,12 @@ class Item extends Component {
       </div>)
     }
   }
+  _snackBarOpen(content, time = 2000) {
+    this.setState({ snackBarOpen: true, content: content })
+    setTimeout(() => {
+      this.setState({ snackBarOpen: false })
+    }, time)
+  }
   _messageSend(e) {
     const messageCount = this.state.messageCount + 1
     this.setState({ messageCount })
@@ -115,6 +125,11 @@ class Item extends Component {
   }
   // 点赞
   _clickGood(e) {
+    if (!AV.User.current()) {
+      this._snackBarOpen('哎～，你忘记登录了耶~')
+      return
+    }
+
     const likeBool = !this.state.likeBool
     let like = likeBool ? this.state.like + 1 : this.state.like - 1
     this.setState({ likeBool, like })
@@ -131,9 +146,9 @@ class Item extends Component {
     this.setState({ messagesShow })
   }
   // 收藏
-  _clickCollection(e) {
-    console.log('-----收藏')
-  }
+  // _clickCollection(e) {
+  //   console.log('-----收藏')
+  // }
   // 分享
   _clickShare(e) {
     console.log('-----分享')

@@ -10,6 +10,8 @@
 .header .container{
     display: flex;
     align-items: center;  
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .header .logo {
@@ -75,4 +77,32 @@
 
 #menuList {
     margin-top: 43px;
+}
+
+@media (max-width: 1024px){
+    .header .logo {
+        width: 100%;
+        display: block;
+    }    
+    .header .container .left{
+        width: 100%;
+        text-align: center;
+    }
+    .header .container .right{
+        width: 100%;
+        display: flex;
+        justify-content: center;        
+    }
+
+    .header .right .buttonw{
+        display: none;
+    }    
+    .header .right .bell {
+        margin: 0 20px 0 0;
+    }
+
+    .header .right .login{
+        margin: 8px;
+    }
+
 }

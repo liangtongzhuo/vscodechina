@@ -8,19 +8,11 @@
     box-sizing: border-box;
 }
 
-@media (max-width: 1024px) {
-    .me .content{
-        width: 100%;
-    }
-}
-
 .me .content .cell {
     display: flex;
     align-items: flex-end;    
     margin-top: 35px;
 }
-
-
 
 .me .content .cell .item{
     width: 100%;
@@ -37,7 +29,15 @@
     margin-left: 5%;    
 }
 
-
 .me .content .b{
     margin-top: 10px
+}
+
+@media (max-width: 1024px) {
+    .me .content{
+        width: 100%;
+    }
+    .me .content{
+        margin-top: 135px;
+    }
 }

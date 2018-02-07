@@ -51,15 +51,15 @@ class Home extends Component {
         </div>
         <div className="right">
           <div className="card">
-            友情提示<br />
+            友情提示：<br />
             少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
           </div>
           <footer className="footer">
             <a className="footer-item"  href="http://www.liangtongzhuo.com">梁同桌博客</a>
             <span className="footer-dot"></span>
-            <a className="footer-item"  href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub</a>            
+            <a className="footer-item"  href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>            
             <span className="footer-dot"></span>
-            <a className="footer-item"  href="http://www.liangtongzhuo.com">后端 GitHub</a>                        
+            <a className="footer-item"  href="http://www.liangtongzhuo.com">后端 GitHub 仓库</a>                        
             <span className="footer-dot"></span>
             <a className="footer-item"  href="https://leancloud.cn">基于 LeanCloud</a>                        
           </footer>

@@ -107,7 +107,7 @@ class Me extends Component {
               error={this.state.buttonMailError}
               className="item"
               value={AV.User.current().getEmail()}
-              label={'邮箱（不可更改), Gravatar 头像'}
+              label={'邮箱不可更改, Gravatar 头像'}
               onChange={this._onChangeMail}
             />
           </div>

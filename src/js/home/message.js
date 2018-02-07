@@ -85,7 +85,7 @@ class MessageComponent extends Component {
           {/*  /留言 */}
           <div className="replyMessage">
             <TextareaAutosize value={this.state.message} onChange={this._textarea} placeholder="留言的人运气不会差" />
-            <Button className="" onClick={this._clickSend}>
+            <Button  onClick={this._clickSend}>
               发送
           </Button>
           </div>
@@ -101,6 +101,11 @@ class MessageComponent extends Component {
   }
   // 发送留言
   _clickSend(e) {
+    if (!AV.User.current()) {
+      this._snackBarOpen('哎～，你忘记登陆了耶')
+      return
+    }
+
     const message = this.state.message
     if (!message || message.length === 0) {
       this._snackBarOpen('哎～，你怎么不说话')
@@ -125,6 +130,11 @@ class MessageComponent extends Component {
   }
   // 点赞
   _clickGood(index, e) {
+    if (!AV.User.current()) {
+      this._snackBarOpen('哎～，你忘记登陆了耶')
+      return
+    }
+
     const messages = this.state.messages
     const bool = messages[index].likeBool
     const like = messages[index].get('like')

@@ -50,7 +50,7 @@ class Login extends Component {
   // 注册
   _clicRegister(e) {
     if (!this.state.buttonLogin) {
-      this._snackBarOpen('请在本页面填写「账号」与「密码」，再点击注册啦～')
+      this._snackBarOpen('请在本页面填写「账号」与「密码」再点击注册啦～',5000)
       return
     }
     this.setState({ progressShow: true })
