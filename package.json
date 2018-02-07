@@ -9,6 +9,7 @@
     "leancloud-storage": "^3.4.2",
     "marked": "^0.3.12",
     "material-ui": "^1.0.0-beta.22",
+    "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-autosize-textarea": "^3.0.1",
     "react-dom": "^16.2.0",

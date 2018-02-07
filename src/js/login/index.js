@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Button } from 'material-ui'
 import AV from "leancloud-storage"
+import queryString from 'query-string'
 import Progress from "../component/progress.js"
 import SnackBar from "../component/snackbar.js"
 
@@ -12,7 +13,7 @@ class Login extends Component {
   constructor(props, context) {
     super(props)
     this.state = {}
-    
+
     this._clickLogin = this._clickLogin.bind(this)
     this._clicRegister = this._clicRegister.bind(this)
     this._onChangeMail = this._onChangeMail.bind(this)
@@ -22,13 +23,38 @@ class Login extends Component {
     this._findPsw = this._findPsw.bind(this)
     this._findSend = this._findSend.bind(this)
     this._backHom = this._backHom.bind(this)
+
+    // github 回调 code
+    const { code } = queryString.parse(this.props.location.search)
+    if (code) {
+      this.setState({ progressShow: true })
+      // 传送 code，换取登陆信息。
+      AV.Cloud.run('gitHubOauth', {
+        code
+      }).then(result => {
+        // 登陆
+        return AV.User.signUpOrlogInWithAuthData({
+          'uid': result.uid,
+          'access_token': result.access_token,
+        }, 'github')
+      }).then((user) => {
+        this.props.history.push('/')
+        this.setState({ progressShow: false })
+      }).catch(err => {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('讨厌，网络错误了')
+        console.log(err)
+      });
+    }
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
 
+
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
+
 
   }
   // 登陆
@@ -219,22 +245,7 @@ class Login extends Component {
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
-    console.log(123)
-    //  github 回调 code
-    const {code} = this.props.match.params
-    if (code) {
-      window.location.href = `https://github.com/login/oauth/access_token
-      ?client_id=538a8b0fb32787b493c7
-      &client_secret=9bb2b07e4b4bada9c816b7d5ab93245aa78bb840
-      &redirect_uri=http://127.0.0.1:3000/other/login&code=`
-        + code
-        console.log(11)
-    }
-    //  github 回调 access_token
-    const {access_token} = this.props.match.params
-    if (access_token){
-      alert(access_token)
-    }
+
   }
   // 更新 Props 或 State 则调用
   shouldComponentUpdate(nextProps, nextState) {
@@ -242,11 +253,9 @@ class Login extends Component {
   }
   //在 Dom 更新之前调用 
   componentWillUpdate(nextProps, nextState) {
-
   }
   // 更新 Dom 结束后调用
   componentDidUpdate() {
-
   }
   // 拆卸调用
   componentWillUnmount() {
