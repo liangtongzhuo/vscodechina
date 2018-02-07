@@ -12,7 +12,7 @@ class Login extends Component {
   constructor(props, context) {
     super(props)
     this.state = {}
-
+    
     this._clickLogin = this._clickLogin.bind(this)
     this._clicRegister = this._clicRegister.bind(this)
     this._onChangeMail = this._onChangeMail.bind(this)
@@ -50,7 +50,7 @@ class Login extends Component {
   // 注册
   _clicRegister(e) {
     if (!this.state.buttonLogin) {
-      this._snackBarOpen('请在本页面填写「账号」与「密码」再点击注册啦～',5000)
+      this._snackBarOpen('请在本页面填写「账号」与「密码」再点击注册啦～', 5000)
       return
     }
     this.setState({ progressShow: true })
@@ -60,7 +60,7 @@ class Login extends Component {
     user.setUsername(mail)
     user.setEmail(mail)
     user.setPassword(password)
-    user.set('name', mail.split('@')[0])    
+    user.set('name', mail.split('@')[0])
     user.signUp().then(loginedUser => {
       this.props.history.push('/')
     }).catch(error => {
@@ -79,10 +79,10 @@ class Login extends Component {
   // 根据邮箱找回密码
   _findSend() {
     const mail = this.state.mail
-    if(!mail){
-      return this._snackBarOpen('请输入邮箱')      
+    if (!mail) {
+      return this._snackBarOpen('请输入邮箱')
     }
-    this.setState({ progressShow: true })    
+    this.setState({ progressShow: true })
     AV.User
       .requestPasswordReset(mail)
       .then(success => {
@@ -91,14 +91,14 @@ class Login extends Component {
       }).catch(error => {
         this.setState({ progressShow: false })
         if (error.code === 1)
-        return this._snackBarOpen('15 分钟后再试啦～')
+          return this._snackBarOpen('15 分钟后再试啦～')
         if (error.code === 205)
-        return this._snackBarOpen('找不到电子邮箱地址，别骗我啦')
+          return this._snackBarOpen('找不到电子邮箱地址，别骗我啦')
         return this._snackBarOpen('网络异常，网络又不好了')
       })
   }
   _onGitHub(e) {
-
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&state=github&redirect_uri=http://127.0.0.1:3000/other/login'
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })
@@ -139,9 +139,8 @@ class Login extends Component {
     this._verify()
   }
   // back 主页
-  _backHom(){
+  _backHom() {
     this.props.history.push('/')
-    
   }
   // 渲染 Dom
   render() {
@@ -220,7 +219,22 @@ class Login extends Component {
   }
   // 父组建更新 Props 调用
   componentWillReceiveProps(nextProps) {
-
+    console.log(nextProps)
+    //  github 回调 code
+    const {code} = this.props.match.params
+    if (code) {
+      window.location.href = `https://github.com/login/oauth/access_token
+      ?client_id=538a8b0fb32787b493c7
+      &client_secret=9bb2b07e4b4bada9c816b7d5ab93245aa78bb840
+      &redirect_uri=http://127.0.0.1:3000/other/login&code=`
+        + code
+        console.log(11)
+    }
+    //  github 回调 access_token
+    const {access_token} = this.props.match.params
+    if (access_token){
+      alert(access_token)
+    }
   }
   // 更新 Props 或 State 则调用
   shouldComponentUpdate(nextProps, nextState) {
