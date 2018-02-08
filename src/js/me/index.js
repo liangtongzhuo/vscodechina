@@ -10,12 +10,19 @@ class Me extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { name: AV.User.current().get('name') }
-
+    this.state = { 
+      name: AV.User.current().get('name'), 
+      bio: AV.User.current().get('bio') ,
+      blog: AV.User.current().get('blog'), 
+      github_url: AV.User.current().get('github_url')
+    }
     this._clickSave = this._clickSave.bind(this)
     this._onChangeName = this._onChangeName.bind(this)
     this._emailVerify = this._emailVerify.bind(this)
     this._upDataPassword = this._upDataPassword.bind(this)
+    this._onChangebBio = this._onChangebBio.bind(this)
+    this._onChangebBlog = this._onChangebBlog.bind(this)
+    
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -44,6 +51,10 @@ class Me extends Component {
     this.setState({ progressShow: true })
     AV.User.current()
       .set('name', this.state.name)
+      .set('bio', this.state.bio)
+      .set('blog', this.state.blog)
+      
+      
       .save().then(result => {
         this.setState({ progressShow: false })
         this._snackBarOpen('保存成功')
@@ -79,16 +90,32 @@ class Me extends Component {
         this._snackBarOpen('网络错啦')
       });
   }
+  // 修改个人信息
+  _onChangebBio(e) {
+    this.setState({ bio: e.target.value })
+  }
+  // 修改博客
+  _onChangebBlog(e) {
+    this.setState({ blog: e.target.value })
+  }
   // 渲染 Dom
   render() {
     return (
       <div className="g-container me">
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-
         <div className="content">
           <h3>个人资料</h3>
           {/* 头像 */}
+          {/* 邮箱 */}
+          <div className="cell">
+            <TextField
+              disabled
+              className="item"
+              value={AV.User.current().getEmail()}
+              label={'用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
+            />
+          </div>
           {/* 名字 */}
           <div className="cell">
             <TextField
@@ -100,29 +127,49 @@ class Me extends Component {
               onChange={this._onChangeName}
             />
           </div>
-          {/* 邮箱 */}
+          {/* 个人主页 */}
+          <div className="cell">
+            <TextField
+              className="item"
+              value={this.state.blog}
+              label={'个人主页'}
+              onChange={this._onChangebBlog}
+            />
+          </div>
+          {/* github_url */}
           <div className="cell">
             <TextField
               disabled
-              error={this.state.buttonMailError}
               className="item"
-              value={AV.User.current().getEmail()}
-              label={'邮箱不可更改, Gravatar 头像'}
-              onChange={this._onChangeMail}
+              value={this.state.github_url}
+              label={'GitHub 地址，仅有授权则修改'}
             />
           </div>
-
+          {/* 介绍 */}
+          <div className="cell">
+            <TextField
+              multiline
+              rowsMax="4"
+              className="item"
+              value={this.state.bio}
+              label={'个人签名'}
+              onChange={this._onChangebBio}
+            />
+          </div>
           <div className="cell">
             <Button className="button" onClick={this._clickSave}>
               保存
             </Button>
             <div className="divb">
-              <Button className="b" onClick={this._emailVerify}>
+              {/* <Button className="b" onClick={this._upDataPassword}>
+                GITHUB 数据同步
+              </Button> */}
+              {/* <Button className="b" onClick={this._emailVerify}>
                 验证邮箱
               </Button>
               <Button className="b" onClick={this._upDataPassword}>
                 修改密码
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
