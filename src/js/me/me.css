@@ -40,4 +40,17 @@
     .me .content{
         margin-top: 135px;
     }
+    .me .content .cell {
+        flex-wrap: wrap;
+    }
+    .me .content .cell .divb{
+        margin: 0;
+        flex: 1;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .me .content .cell .button{
+        width: 100%
+    }
 }

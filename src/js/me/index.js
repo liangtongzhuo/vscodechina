@@ -161,15 +161,15 @@ class Me extends Component {
               保存
             </Button>
             <div className="divb">
-              {/* <Button className="b" onClick={this._upDataPassword}>
-                GITHUB 数据同步
-              </Button> */}
-              {/* <Button className="b" onClick={this._emailVerify}>
+              <Button className="b" onClick={this._upDataPassword}>
+                GITHUB授权
+              </Button>
+              <Button className="b" onClick={this._emailVerify}>
                 验证邮箱
               </Button>
               <Button className="b" onClick={this._upDataPassword}>
                 修改密码
-              </Button> */}
+              </Button>
             </div>
           </div>
         </div>
