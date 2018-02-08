@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { TextField, Button } from 'material-ui'
 import AV from "leancloud-storage"
-import queryString from 'query-string'
 import Progress from "../component/progress.js"
 import SnackBar from "../component/snackbar.js"
 
@@ -23,7 +22,6 @@ class Login extends Component {
     this._findPsw = this._findPsw.bind(this)
     this._findSend = this._findSend.bind(this)
     this._backHom = this._backHom.bind(this)
-    this._oauth = this._oauth.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -33,31 +31,9 @@ class Login extends Component {
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
 
-    // github 回调 code        
-    this._oauth()
+  
   }
-  _oauth() {
-    const { code } = queryString.parse(this.props.location.search)
-    if (!code) return
-    this.setState({ progressShow: true })
-    // 传送 code，换取登陆信息。
-    AV.Cloud.run('gitHubOauth', {
-      code
-    }).then(result => {
-      // 登陆
-      return AV.User.signUpOrlogInWithAuthData({
-        'uid': result.uid + '',
-        'access_token': result.access_token,
-      }, 'github')
-    }).then(_ => {
-      this.props.history.push('/')
-      this.setState({ progressShow: false })
-    }).catch(err => {
-      this.setState({ progressShow: false })
-      this._snackBarOpen('好奇怪耶～，获取不到你的 GitHub 交友信息～')
-      console.log(err)
-    });
-  }
+
   // 登陆
   _clickLogin(e) {
     this.setState({ progressShow: true })
@@ -124,7 +100,7 @@ class Login extends Component {
       })
   }
   _onGitHub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&state=github&redirect_uri=http://127.0.0.1:3000/other/login'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://127.0.0.1:3000/other/oauth'
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })

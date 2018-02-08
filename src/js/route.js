@@ -10,6 +10,8 @@ import Home from "./home"
 import Write from "./write"
 import Login from "./login"
 import Me from "./me"
+import Oauth from "./oauth"
+
 
 class App extends Component {
   render() {
@@ -28,6 +30,8 @@ class App extends Component {
           <Route exact path="/other/write/:id?" component={Write} />
           {/* 登陆 */}
           <Route exact path="/other/login" component={Login} />
+          {/* 登陆 */}
+          <Route exact path="/other/oauth" component={Oauth} />          
         </div>
       </Router>
     );

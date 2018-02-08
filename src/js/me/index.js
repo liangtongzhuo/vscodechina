@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, TextField } from 'material-ui'
+import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from 'material-ui'
 import AV from "leancloud-storage"
 import Progress from "../component/progress.js"
 import SnackBar from "../component/snackbar.js"
@@ -24,10 +24,11 @@ class Me extends Component {
     this._onChangebBio = this._onChangebBio.bind(this)
     this._onChangebBlog = this._onChangebBlog.bind(this)
     this._buttonGithub = this._buttonGithub.bind(this)
+    this._open = this._open.bind(this)
+    this._close = this._close.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
-
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
@@ -51,11 +52,11 @@ class Me extends Component {
     // 验证名字合格
     for (let i = 0; i < this.state.name.length; i++) {
       const str = this.state.name[i];
-      if (str === '@' ){
+      if (str === '@') {
         this._snackBarOpen('名字不能有 @ 呢 ~_~')
         return
       }
-      if ( str === ' '){
+      if (str === ' ') {
         this._snackBarOpen('名字不能有空格呢 -_-')
         return
       }
@@ -111,10 +112,17 @@ class Me extends Component {
   }
   // 授权页面
   _buttonGithub(e) {
-    console.log(e.target)
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://127.0.0.1:3000/other/oauth&state=' + AV.User.current().id
+  }
+  _open(e) {
+    this.setState({ show: true })
+  }
+  _close(e) {
+    this.setState({ show: false })
   }
   // 渲染 Dom
   render() {
+
     return (
       <div className="g-container me">
         <Progress show={this.state.progressShow} />
@@ -176,7 +184,7 @@ class Me extends Component {
               保存
             </Button>
             <div className="divb">
-              <Button className="b" onClick={this._buttonGithub}>
+              <Button className="b" onClick={this._open}>
                 GITHUB授权
               </Button>
               <Button className="b" onClick={this._emailVerify}>
@@ -188,6 +196,29 @@ class Me extends Component {
             </div>
           </div>
         </div>
+
+        {/* model */}
+        <Dialog
+          open={this.state.show}
+          onClose={this._close}
+        >
+          <DialogTitle >{"请注意，少部分人来说是危险操作"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              关联 GitHub 数据，同步昵称、GitHub、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
+              <br /><br />
+              如果当前账户邮箱与 GitHub 绑定邮箱一致则不存在此问题 。
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this._buttonGithub} >
+              授权
+            </Button>
+            <Button onClick={this._close} autoFocus>
+              取消
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
