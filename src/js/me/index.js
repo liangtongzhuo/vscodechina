@@ -136,7 +136,7 @@ class Me extends Component {
               disabled
               className="item"
               value={this.state.email}
-              label={'用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
+              label={'邮箱: 用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
             />
           </div>
           {/* 名字 */}

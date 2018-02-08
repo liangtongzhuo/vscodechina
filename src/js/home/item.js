@@ -55,7 +55,10 @@ class Item extends Component {
           <div className="left">
             <img className="headimg" src={this.state.headUrl} alt="header" />
             <Link className="name" to="/"> {this.props.item.get('user').get('name')} </Link>
-            <Link className="github" to="/"> GitHub </Link>
+            <a className="github" style={{ display: this.props.item.get('user').get('github_url') ? '' : 'none'}}
+              href={this.props.item.get('user').get('github_url')}>
+              GitHub
+            </a>
           </div>
           <div className="time">
             {this._getDateDiff(this.props.item.createdAt)}
