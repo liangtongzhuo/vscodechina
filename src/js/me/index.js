@@ -69,16 +69,16 @@ class Me extends Component {
       .set('blog', this.state.blog)
       .save().then(result => {
         this.setState({ progressShow: false })
-        this._snackBarOpen('保存成功')
+        this._snackBarOpen('保存成功 :)')
       }).catch(error => {
         this.setState({ progressShow: false })
+        if (error.code === 137) return this._snackBarOpen('名字重复了 :(')
         this._snackBarOpen('讨厌，网络错误了')
       })
   }
   // 验证邮箱
   _emailVerify(e) {
     this.setState({ progressShow: true })
-
     AV.User
       .requestEmailVerify(AV.User.current().getEmail())
       .then(function (result) {
@@ -205,14 +205,14 @@ class Me extends Component {
           <DialogTitle >{"请注意，少部分人来说是危险操作"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              关联 GitHub 数据，同步昵称、GitHub、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
+              关联 GitHub 数据，同步昵称、GitHub 地址、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
               <br /><br />
               如果当前账户邮箱与 GitHub 绑定邮箱一致则不存在此问题 。
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this._buttonGithub} >
-              授权
+              授权更新
             </Button>
             <Button onClick={this._close} autoFocus>
               取消

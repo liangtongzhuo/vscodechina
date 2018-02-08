@@ -11,9 +11,8 @@ class Oauth extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    const { code } = queryString.parse(this.props.location.search)
-    this.state = { progressShow: true, code }
-
+    const { code, state } = queryString.parse(this.props.location.search)
+    this.state = { progressShow: true, code, state }
     this._back = this._back.bind(this)
     // github 回调 code        
     this._oauth()
@@ -28,11 +27,12 @@ class Oauth extends Component {
 
   }
   _oauth() {
-    const { code } = this.state
+    const { code, state } = this.state
     if (!code) return this.props.history.push('/')
     // 传送 code，换取登陆信息。
     AV.Cloud.run('gitHubOauth', {
-      code
+      code,
+      state
     }).then(result => {
       // 登陆
       return AV.User.signUpOrlogInWithAuthData({
@@ -40,15 +40,15 @@ class Oauth extends Component {
         'access_token': result.access_token,
       }, 'github')
     }).then(_ => {
-      this.props.history.push('/')
       this.setState({ progressShow: false })
+      this.props.history.push('/')      
     }).catch(err => {
       this.setState({ progressShow: false, error: true })
       this._snackBarOpen('好奇怪耶～，获取不到你的 GitHub 交友信息～', 5000)
       console.log(err)
     });
   }
-  _back(e){
+  _back(e) {
     this.props.history.push('/')
   }
   // 渲染 Dom
