@@ -23,7 +23,7 @@ class Me extends Component {
     this._upDataPassword = this._upDataPassword.bind(this)
     this._onChangebBio = this._onChangebBio.bind(this)
     this._onChangebBlog = this._onChangebBlog.bind(this)
-
+    this._buttonGithub = this._buttonGithub.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -109,6 +109,10 @@ class Me extends Component {
   _onChangebBlog(e) {
     this.setState({ blog: e.target.value })
   }
+  // 授权页面
+  _buttonGithub(e) {
+    console.log(e.target)
+  }
   // 渲染 Dom
   render() {
     return (
@@ -172,7 +176,7 @@ class Me extends Component {
               保存
             </Button>
             <div className="divb">
-              <Button className="b" onClick={this._upDataPassword}>
+              <Button className="b" onClick={this._buttonGithub}>
                 GITHUB授权
               </Button>
               <Button className="b" onClick={this._emailVerify}>

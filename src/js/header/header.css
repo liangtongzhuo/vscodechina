@@ -97,12 +97,13 @@
     .header .right .buttonw{
         display: none;
     }
+    .header .right .button {
+        width: 100%
+    }
     .header .right .bell {
         margin: 0 20px 0 0;
     }
-
     .header .right .login{
         margin: 8px;
     }
-
 }
