@@ -11,6 +11,7 @@ class Me extends Component {
   constructor(props, context) {
     super(props)
     this.state = { 
+      email : AV.User.current().getEmail(),
       name: AV.User.current().get('name'), 
       bio: AV.User.current().get('bio') ,
       blog: AV.User.current().get('blog'), 
@@ -112,7 +113,7 @@ class Me extends Component {
             <TextField
               disabled
               className="item"
-              value={AV.User.current().getEmail()}
+              value={this.state.email}
               label={'用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
             />
           </div>
