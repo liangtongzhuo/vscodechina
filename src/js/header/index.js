@@ -10,7 +10,11 @@ import { Bell } from "./svg.js"
 class Header extends Component {
   constructor(props, context) {
     super(props)
-    this.state = { anchorEl: null, menuShow: false }
+    
+    // 当前用户头像
+    let url = AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'
+    this.state = { anchorEl: null, menuShow: false, url }
+
     this._clickHead = this._clickHead.bind(this)
     this._handleClose = this._handleClose.bind(this)
     this._handleMenuClose = this._handleMenuClose.bind(this)
@@ -57,7 +61,7 @@ class Header extends Component {
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
-        <img className="headimg" onClick={this._clickHead} src={'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g'} alt="header" />
+        <img className="headimg" onClick={this._clickHead} src={this.state.url} alt="header" />
       </div>) :
       (<div className="right">
         <Button className="button login"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>

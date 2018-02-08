@@ -49,13 +49,25 @@
     width: 45%;
 }
 
-.login .box  .buttonGithub{
-    margin-top: 30px;
-    padding: 0;
-    width: 80%;  
+.login .box .itemButton .blue{
     color: #fff;
     background: #0f88eb;    
 }
+
+.login .box  .buttonGithub{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%;   
+}
+
+.login .box  .buttonGithub-blue{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%;
+    color: #fff;
+    background: #0f88eb;
+}
+
 
 .login .box  .findPsw{
     margin-top: 30px;

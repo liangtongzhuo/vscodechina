@@ -177,14 +177,14 @@ class Login extends Component {
           />
           {/* 按钮 */}
           <div className="itemButton">
-            <Button disabled={!this.state.buttonLogin} className="button" onClick={this._clickLogin}>
+            <Button disabled={!this.state.buttonLogin} className={!this.state.buttonLogin ? 'button' : 'button blue'}  onClick={this._clickLogin}>
               登陆
           </Button>
             <Button className="button" onClick={this._clicRegister}>
               注册
           </Button>
           </div>
-          <Button className="buttonGithub" onClick={this._onGitHub}>
+          <Button className={this.state.buttonLogin ? 'buttonGithub' : 'buttonGithub-blue'}  onClick={this._onGitHub}>
             GitHub 授权登陆
           </Button>
           <Button className="findPsw" onClick={this._findPsw}>

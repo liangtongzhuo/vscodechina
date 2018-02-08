@@ -55,10 +55,11 @@ class MessageComponent extends Component {
     this.setState({ message: e.target.value })
   }
   render() {
-    const messages = this.state.messages.map((item, index) =>
-      <div key={index}>
+    const messages = this.state.messages.map((item, index) => {
+      const headUrl = item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
+      return (<div key={index}>
         <div className="head">
-          <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="头像" />
+          <img className="headimg" src={headUrl} alt="头像" />
           <a>{item.get('user').get('name')}</a>
           <span>{this._getDateDiff(item.createdAt)}</span>
         </div>
@@ -72,6 +73,10 @@ class MessageComponent extends Component {
           </Button>
         </div>
       </div>)
+    })
+
+
+
     return (
       <div className="messagesList" style={{ display: this.props.messagesShow ? '' : 'none' }}>
         <Progress show={this.state.progressShow} />
@@ -85,7 +90,7 @@ class MessageComponent extends Component {
           {/*  /留言 */}
           <div className="replyMessage">
             <TextareaAutosize value={this.state.message} onChange={this._textarea} placeholder="留言的人运气不会差" />
-            <Button  onClick={this._clickSend}>
+            <Button onClick={this._clickSend}>
               发送
           </Button>
           </div>

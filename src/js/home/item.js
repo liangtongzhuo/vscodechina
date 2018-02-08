@@ -28,7 +28,10 @@ class Item extends Component {
     }
     const messageCount = this.props.item.get('messageCount')
 
-    this.state = { title, data, imgUrl, markSource: props.item.get('data'), like: props.item.get('like'), likeBool, messageCount }
+    let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
+
+
+    this.state = { title, data, imgUrl, markSource: props.item.get('data'), like: props.item.get('like'), likeBool, messageCount, headUrl }
 
     this._clickRead = this._clickRead.bind(this)
     this._readInfo = this._readInfo.bind(this)
@@ -50,7 +53,7 @@ class Item extends Component {
         {/* 用户信息 */}
         <div className="user">
           <div className="left">
-            <img className="headimg" src={'https://secure.gravatar.com/avatar/' + md5(this.props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'} alt="header" />
+            <img className="headimg" src={this.state.headUrl} alt="header" />
             <Link className="name" to="/"> {this.props.item.get('user').get('name')} </Link>
             <Link className="github" to="/"> GitHub </Link>
           </div>
