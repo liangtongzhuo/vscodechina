@@ -23,29 +23,7 @@ class Login extends Component {
     this._findPsw = this._findPsw.bind(this)
     this._findSend = this._findSend.bind(this)
     this._backHom = this._backHom.bind(this)
-
-    // github 回调 code
-    const { code } = queryString.parse(this.props.location.search)
-    if (code) {
-      this.setState({ progressShow: true })
-      // 传送 code，换取登陆信息。
-      AV.Cloud.run('gitHubOauth', {
-        code
-      }).then(result => {
-        // 登陆
-        return AV.User.signUpOrlogInWithAuthData({
-          'uid': result.uid,
-          'access_token': result.access_token,
-        }, 'github')
-      }).then((user) => {
-        this.props.history.push('/')
-        this.setState({ progressShow: false })
-      }).catch(err => {
-        this.setState({ progressShow: false })
-        this._snackBarOpen('讨厌，网络错误了')
-        console.log(err)
-      });
-    }
+    this._oauth = this._oauth.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -55,7 +33,30 @@ class Login extends Component {
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
 
-
+    // github 回调 code        
+    this._oauth()
+  }
+  _oauth() {
+    const { code } = queryString.parse(this.props.location.search)
+    if (!code) return
+    this.setState({ progressShow: true })
+    // 传送 code，换取登陆信息。
+    AV.Cloud.run('gitHubOauth', {
+      code
+    }).then(result => {
+      // 登陆
+      return AV.User.signUpOrlogInWithAuthData({
+        'uid': result.uid + '',
+        'access_token': result.access_token,
+      }, 'github')
+    }).then(_ => {
+      this.props.history.push('/')
+      this.setState({ progressShow: false })
+    }).catch(err => {
+      this.setState({ progressShow: false })
+      this._snackBarOpen('好奇怪耶～，获取不到你的 GitHub 交友信息～')
+      console.log(err)
+    });
   }
   // 登陆
   _clickLogin(e) {
@@ -66,7 +67,6 @@ class Login extends Component {
       this.props.history.push('/')
     }).catch(error => {
       console.log(error)
-      console.log(error.code)
       this.setState({ progressShow: false })
       if (error.code === 211) return this._snackBarOpen('没有找到邮箱～')
       if (error.code === 210) return this._snackBarOpen('密码错误，你好好想想～')
@@ -253,9 +253,11 @@ class Login extends Component {
   }
   //在 Dom 更新之前调用 
   componentWillUpdate(nextProps, nextState) {
+
   }
   // 更新 Dom 结束后调用
   componentDidUpdate() {
+
   }
   // 拆卸调用
   componentWillUnmount() {

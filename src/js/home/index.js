@@ -59,7 +59,7 @@ class Home extends Component {
             <span className="footer-dot"></span>
             <a className="footer-item"  href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>            
             <span className="footer-dot"></span>
-            <a className="footer-item"  href="http://www.liangtongzhuo.com">后端 GitHub 仓库</a>                        
+            <a className="footer-item"  href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>                        
             <span className="footer-dot"></span>
             <a className="footer-item"  href="https://leancloud.cn">基于 LeanCloud</a>                        
           </footer>
