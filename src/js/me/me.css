@@ -12,6 +12,8 @@
     display: flex;
     align-items: flex-end;    
     margin-top: 35px;
+    flex: 1;
+    justify-content: space-between;
 }
 
 .me .content .cell .item{

@@ -10,11 +10,11 @@ class Me extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { 
-      email : AV.User.current().getEmail(),
-      name: AV.User.current().get('name'), 
-      bio: AV.User.current().get('bio') ,
-      blog: AV.User.current().get('blog'), 
+    this.state = {
+      email: AV.User.current().getEmail(),
+      name: AV.User.current().get('name'),
+      bio: AV.User.current().get('bio'),
+      blog: AV.User.current().get('blog'),
       github_url: AV.User.current().get('github_url')
     }
     this._clickSave = this._clickSave.bind(this)
@@ -23,7 +23,7 @@ class Me extends Component {
     this._upDataPassword = this._upDataPassword.bind(this)
     this._onChangebBio = this._onChangebBio.bind(this)
     this._onChangebBlog = this._onChangebBlog.bind(this)
-    
+
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -44,9 +44,21 @@ class Me extends Component {
   }
   // 保存信息
   _clickSave(e) {
-    if (this.state.name && this.state.name.length === 0) {
-      this._snackBarOpen('名字不能为空')
+    if (this.state.name && (this.state.name.length === 0 || this.state.name.length > 20)) {
+      this._snackBarOpen('名字不能为空，且不能大于 20 字符')
       return
+    }
+    // 验证名字合格
+    for (let i = 0; i < this.state.name.length; i++) {
+      const str = this.state.name[i];
+      if (str === '@' ){
+        this._snackBarOpen('名字不能有 @ 呢 ~_~')
+        return
+      }
+      if ( str === ' '){
+        this._snackBarOpen('名字不能有空格呢 -_-')
+        return
+      }
     }
 
     this.setState({ progressShow: true })
@@ -54,8 +66,6 @@ class Me extends Component {
       .set('name', this.state.name)
       .set('bio', this.state.bio)
       .set('blog', this.state.blog)
-      
-      
       .save().then(result => {
         this.setState({ progressShow: false })
         this._snackBarOpen('保存成功')
@@ -143,7 +153,7 @@ class Me extends Component {
               disabled
               className="item"
               value={this.state.github_url}
-              label={'GitHub 地址，仅有授权则修改'}
+              label={'GitHub 地址'}
             />
           </div>
           {/* 介绍 */}
