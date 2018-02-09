@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown'
 import Progress from "../progress"
 import SnackBar from "../snackbar"
 import "github-markdown-css"
-// import MessageChildren from "../message"
+import "./atricleItem.css"
 
 class AtricleItem extends Component {
   // 加载一次，初始化状态
@@ -45,7 +45,7 @@ class AtricleItem extends Component {
   render() {
 
     return (
-      <div className="item">
+      <div className="atricleItem">
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         {/* 简介 */}
