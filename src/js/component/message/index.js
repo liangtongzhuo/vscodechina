@@ -5,9 +5,9 @@ import TextareaAutosize from 'react-autosize-textarea'
 import ReactMarkdown from 'react-markdown'
 import md5 from 'blueimp-md5'
 import "github-markdown-css"
-import { Reply, MessageGood } from "./svg.js"
-import Progress from "../component/progress"
-import SnackBar from "../component/snackbar"
+import { Reply, MessageGood } from "../svg.js"
+import Progress from "../progress"
+import SnackBar from "../snackbar"
 
 class MessageComponent extends Component {
   // 加载一次，初始化状态

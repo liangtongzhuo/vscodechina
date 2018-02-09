@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'material-ui'
+// import { Button } from 'material-ui'
 import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
@@ -42,7 +42,7 @@ class Oauth extends Component {
             <div className="usercover-image" />
             <div className="info">
               <div className="div-user-image">
-                <img src={this.state.url} />
+                <img src={this.state.url} alt="头像"/>
               </div>
               <h2 className="name">
                 梁同桌

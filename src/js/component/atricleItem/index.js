@@ -4,14 +4,14 @@ import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
 import md5 from 'blueimp-md5'
-import { Bottom, Good, Message, Share } from "./svg.js" //,Collection
+import { Bottom, Good, Message, Share } from "../svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
-import MessageComponent from './message.js'
-import Progress from "../component/progress"
-import SnackBar from "../component/snackbar"
+import Progress from "../progress"
+import SnackBar from "../snackbar"
 import "github-markdown-css"
+// import MessageChildren from "../message"
 
-class Item extends Component {
+class AtricleItem extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
@@ -43,6 +43,7 @@ class Item extends Component {
   }
 
   render() {
+
     return (
       <div className="item">
         <Progress show={this.state.progressShow} />
@@ -91,7 +92,7 @@ class Item extends Component {
 
           {this._cloneButton()}
         </div>
-        <MessageComponent messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
+        <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
       </div>
     )
   }
@@ -203,7 +204,7 @@ class Item extends Component {
   }
 }
 
-export default Item
+export default AtricleItem
 
 
 //https://secure.gravatar.com/avatar/3a1e5cac75ad5e0a710e828fa2f433bd?s=50*50
