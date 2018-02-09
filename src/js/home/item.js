@@ -18,7 +18,7 @@ class Item extends Component {
     const title = props.item.get('title')
     //从 marked 提取文本与图片地址
     const markdown = marked(props.item.get('data'))
-    const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 200) + '...'
+    const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
     const imgObj = props.item.get('data').match(/!\[(.*?)\]\((.*?)\)/) || []
     const imgUrl = imgObj.length >= 2 ? imgObj[2] : ''
 
@@ -39,6 +39,7 @@ class Item extends Component {
     this._clickGood = this._clickGood.bind(this)
     this._messageSend = this._messageSend.bind(this)
     this._snackBarOpen = this._snackBarOpen.bind(this)
+    this._cloneButton = this._cloneButton.bind(this)
   }
 
   render() {
@@ -55,7 +56,7 @@ class Item extends Component {
           <div className="left">
             <img className="headimg" src={this.state.headUrl} alt="header" />
             <Link className="name" to="/"> {this.props.item.get('user').get('name')} </Link>
-            <a className="github" style={{ display: this.props.item.get('user').get('github_url') ? '' : 'none'}}
+            <a className="github" style={{ display: this.props.item.get('user').get('github_url') ? '' : 'none' }}
               href={this.props.item.get('user').get('github_url')}>
               GitHub
             </a>
@@ -73,7 +74,7 @@ class Item extends Component {
         </div>
         {/* 按钮工具 */}
         <div className="tool">
-          <Button className={this.state.likeBool ? "button buttonBlue" : "button"} onClick={this._clickGood}>
+          <Button className={this.state.likeBool ? "button buttonBlue button-border" : "button button-border"} onClick={this._clickGood}>
             <Good className={this.state.likeBool ? "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.like} 赞
               </Button>
 
@@ -84,25 +85,21 @@ class Item extends Component {
           {/* <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
               </Button> */}
-
           <Button className="button" onClick={this._clickShare}>
             <Share className="g-color-gray-fill" />&nbsp; 分享
               </Button>
+
+          {this._cloneButton()}
         </div>
         <MessageComponent messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
       </div>
     )
   }
-  // 设置是否展开
+  // 展示信息
   _readInfo() {
     if (this.state.showRead) {
       return (<div className="info">
         <ReactMarkdown source={this.state.markSource} className="markdown-body markdown" escapeHtml={false} />
-        <div className="open">
-          <Button className="button read" onClick={this._clickRead}>
-            &nbsp;收&nbsp;起&nbsp;
-        </Button>
-        </div>
       </div>)
     } else {
       return (<div className="info" onClick={this._clickRead}>
@@ -114,6 +111,19 @@ class Item extends Component {
       </div>)
     }
   }
+  _cloneButton() {
+    if (this.state.showRead) {
+      return (
+        <div className="right-button">
+          <Button className="button" onClick={this._clickRead}>
+            收起 &nbsp;
+            <Bottom className="g-color-gray-fill button-transform" />
+          </Button>
+        </div>
+      )
+    }
+  }
+
   _snackBarOpen(content, time = 2000) {
     this.setState({ snackBarOpen: true, content: content })
     setTimeout(() => {

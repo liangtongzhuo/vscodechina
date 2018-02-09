@@ -15,7 +15,7 @@
 
 .home .left .item {
   margin-bottom: 10px;
-  padding: 16px 20px;
+  padding: 10px 20px 15px 20px;
   border-radius: 2px;  
   background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
@@ -91,22 +91,29 @@
 .home .left .item .content .info{
   flex: 1;
   font-size: 15px;
-  line-height: 1.7em;  
+  line-height: 1.6em;  
   color: #262626;
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .home .left .item .content .info:hover{
   color: #8590a6;
 }
 
-.home .left .item .content .info .open{
-  display: flex;
-  flex-direction: row-reverse;
-}
-
 .home .left .item .tool{
   margin-top: 10px;
+  display: flex;
+}
+
+.home .left .item .tool .right-button{
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.home .left .item .tool .right-button .button .button-transform{
+  transform: rotate(180deg);
 }
 
 .home .left .item .button{
@@ -122,8 +129,12 @@
   color: #ffffff;
 }
 
+.home .left .item .button-border{
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
 .home .read{
-  padding: 5px 2px;
+  padding: 3px 2px;
 }
 
 .home .left .item .messagesList{

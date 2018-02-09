@@ -62,8 +62,18 @@ class Oauth extends Component {
           </div>
         </div>
 
+        
         <div className="left">
+          <div className="cart">
             adadadhjkhkh
+          </div>
+        </div>
+        <div className="right">
+          <div className="cart">
+            <div className="right-title">个人成就</div>
+            <div className="right-item">发表文章 20 篇</div>
+            <div className="right-item">留言 20 条</div>
+          </div>
         </div>
       </div>
     )
