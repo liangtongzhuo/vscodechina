@@ -83,7 +83,7 @@ class Header extends Component {
       return
     }
     if(i === 1){
-      console.log('文章')      
+      this.props.history.push('/atricle') 
       return
     }
     if(i === 2){

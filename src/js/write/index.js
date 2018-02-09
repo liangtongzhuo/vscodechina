@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Button, List, ListItem, ListItemText, Menu, MenuItem } from 'material-ui'
 import AV from "leancloud-storage"
 import ReactMarkdown from 'react-markdown'
-import Progress from "../component/progress.js"
-import SnackBar from "../component/snackbar.js"
+import Progress from "../component/progress"
+import SnackBar from "../component/snackbar"
 
 import "github-markdown-css"
 import "./write.css"

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { TextField, Button } from 'material-ui'
 import AV from "leancloud-storage"
-import Progress from "../component/progress.js"
-import SnackBar from "../component/snackbar.js"
+import Progress from "../component/progress"
+import SnackBar from "../component/snackbar"
 
 import "./login.css"
 

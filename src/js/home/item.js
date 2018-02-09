@@ -7,8 +7,8 @@ import md5 from 'blueimp-md5'
 import { Bottom, Good, Message, Share } from "./svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
 import MessageComponent from './message.js'
-import Progress from "../component/progress.js"
-import SnackBar from "../component/snackbar.js"
+import Progress from "../component/progress"
+import SnackBar from "../component/snackbar"
 import "github-markdown-css"
 
 class Item extends Component {

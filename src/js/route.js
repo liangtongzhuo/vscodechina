@@ -10,7 +10,9 @@ import Home from "./home"
 import Write from "./write"
 import Login from "./login"
 import Me from "./me"
+import Atricle from "./atricle"
 import Oauth from "./oauth"
+
 
 
 class App extends Component {
@@ -23,6 +25,7 @@ class App extends Component {
           <Switch>
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
+            <Route exact path="/atricle/:atricleId?" component={Atricle} />
             {/* 文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>
@@ -30,7 +33,7 @@ class App extends Component {
           <Route exact path="/other/write/:id?" component={Write} />
           {/* 登陆 */}
           <Route exact path="/other/login" component={Login} />
-          {/* 登陆 */}
+          {/* 第三方验证 */}
           <Route exact path="/other/oauth" component={Oauth} />          
         </div>
       </Router>
