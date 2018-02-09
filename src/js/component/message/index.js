@@ -8,6 +8,7 @@ import "github-markdown-css"
 import { Reply, MessageGood } from "../svg.js"
 import Progress from "../progress"
 import SnackBar from "../snackbar"
+import "./message.css"
 
 class MessageComponent extends Component {
   // 加载一次，初始化状态
@@ -74,8 +75,6 @@ class MessageComponent extends Component {
         </div>
       </div>)
     })
-
-
 
     return (
       <div className="messagesList" style={{ display: this.props.messagesShow ? '' : 'none' }}>

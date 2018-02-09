@@ -1,0 +1,88 @@
+.messagesList {
+  border: 1px solid #e7eaf2;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.messagesList .messagesCount {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e1e1e;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e7eaf2;
+}
+
+.messagesList .messages {
+  font-size: 15px;
+}
+
+.messagesList .messages .head {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px 0 15px;
+}
+
+.messagesList .messages .head .headimg {
+  width: 24px;
+  height: 24px;
+  border-radius: 10%;
+}
+
+.messagesList .messages .head a {
+  margin-left: 10px;
+}
+
+.messagesList .messages .head span {
+  display: flex;
+  flex: 1 1;
+  justify-content: flex-end;
+  margin-left: 10px;
+  color: #8590a6;
+  font-size: 15px;
+}
+
+.messagesList .messages .content {
+  padding: 15px;
+  overflow: hidden;
+}
+
+.messagesList .messages .messagetool {
+  padding-left: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e7eaf2;
+}
+
+.messagesList .messages .messagetool button {
+  padding: 7px 8px;
+}
+
+.messagesList .messages .messagetool .buttonColor {
+  background-color: #0f88eb;
+  color: #ffffff;
+}
+
+.messagesList .messages .replyMessage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.messagesList .messages .replyMessage textarea {
+  flex: 1;
+  height: 35px;
+  margin: 10px;
+  ;
+  padding: 7px 7px 7px 7px;
+  border: 1px solid #e7eaf1;
+  box-sizing: border-box;
+  border-radius: 2px;
+  font-size: 15px;
+}
+
+.messagesList .messages .replyMessage button {
+  margin: 10px 10px 10px 0;
+  min-width: 0;
+  height: 30px;
+  background: #0f88eb;
+  color: white;
+}
