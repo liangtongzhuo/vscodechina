@@ -13,8 +13,6 @@ import Me from "./me"
 import Atricle from "./atricle"
 import Oauth from "./oauth"
 
-
-
 class App extends Component {
   render() {
     return (
@@ -34,13 +32,11 @@ class App extends Component {
           {/* 登陆 */}
           <Route exact path="/other/login" component={Login} />
           {/* 第三方验证 */}
-          <Route exact path="/other/oauth" component={Oauth} />          
+          <Route exact path="/other/oauth" component={Oauth} />
         </div>
       </Router>
     );
   }
 }
-
-
 
 export default App

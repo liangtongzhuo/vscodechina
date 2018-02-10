@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Button, IconButton, Menu, MenuItem } from 'material-ui'
-import AV from "leancloud-storage"
+import AV from 'leancloud-storage'
 import md5 from 'blueimp-md5'
 
-import "./header.css"
-import { Bell } from "./svg.js"
+import './header.css'
+import { Bell } from './svg.js'
+import modal from '../component/modal'
 
 class Header extends Component {
   constructor(props, context) {

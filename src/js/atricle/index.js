@@ -42,7 +42,7 @@ class Oauth extends Component {
             <div className="usercover-image" />
             <div className="info">
               <div className="div-user-image">
-                <img src={this.state.url} alt="头像"/>
+                <img src={this.state.url} alt="头像" />
               </div>
               <h2 className="name">
                 梁同桌
@@ -62,7 +62,7 @@ class Oauth extends Component {
           </div>
         </div>
 
-        
+
         <div className="left">
           <div className="cart">
             adadadhjkhkh

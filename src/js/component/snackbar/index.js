@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Snackbar } from 'material-ui'
 
-import "./snackbar.css"
-
 class SnackBar extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
@@ -23,7 +21,7 @@ class SnackBar extends Component {
       <Snackbar className="snackbar"
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={this.props.open}
-        message={this.props.content || '梁萌萌'}
+        message={this.props.content || ':)'}
       />
     )
   }
