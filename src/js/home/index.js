@@ -4,8 +4,9 @@ import AtricleItem from "../component/atricleItem"
 import Message from "../component/message"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
-import "./home.css"
+import Header from "../component/header"
 
+import "./home.css"
 
 class Home extends Component {
   // 加载一次，初始化状态
@@ -41,31 +42,34 @@ class Home extends Component {
   // 渲染 Dom
   render() {
     const items = this.state.items.map((item, index) =>
-      <AtricleItem key={index} item={item} MessageChildren={Message}/>
+      <AtricleItem key={index} item={item} MessageChildren={Message} />
     )
     return (
-      <div className="g-container home">
-        <Progress show={this.state.progressShow} />
-        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-        <div className="left">
-          {items}
-        </div>
-        <div className="right">
-          <div className="card">
-            友情提示：<br />
-            少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
+      <div>
+        <Header />
+        <div className="g-container home">
+          <Progress show={this.state.progressShow} />
+          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+          <div className="left">
+            {items}
           </div>
-          <footer className="footer">
-            <a className="footer-item" href="http://www.liangtongzhuo.com">梁同桌博客</a>
-            <span className="footer-dot"></span>
-            <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>
-            <span className="footer-dot"></span>
-            <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>
-            <span className="footer-dot"></span>
-            <a className="footer-item" href="https://leancloud.cn">基于 LeanCloud</a>
-          </footer>
-        </div>
-      </div >
+          <div className="right">
+            <div className="card">
+              友情提示：<br />
+              少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
+          </div>
+            <footer className="footer">
+              <a className="footer-item" href="http://www.liangtongzhuo.com">梁同桌博客</a>
+              <span className="footer-dot"></span>
+              <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>
+              <span className="footer-dot"></span>
+              <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>
+              <span className="footer-dot"></span>
+              <a className="footer-item" href="https://leancloud.cn">基于 LeanCloud</a>
+            </footer>
+          </div>
+        </div >
+      </div>
     )
   }
   _snackBarOpen(content, time = 2000) {
