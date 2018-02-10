@@ -31,8 +31,6 @@ class App extends Component {
             {/* 主页文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>
-
-
         </div>
       </Router>
     );

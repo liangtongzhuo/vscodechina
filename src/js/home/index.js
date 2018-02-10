@@ -46,7 +46,7 @@ class Home extends Component {
     )
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <div className="g-container home">
           <Progress show={this.state.progressShow} />
           <SnackBar open={this.state.snackBarOpen} content={this.state.content} />

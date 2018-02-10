@@ -100,7 +100,7 @@ class Login extends Component {
       })
   }
   _onGitHub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://vscode-china.com/other/oauth'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://localhost:3000/other/oauth'
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })

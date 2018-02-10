@@ -4,6 +4,7 @@ import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import md5 from 'blueimp-md5'
+import Header from "../component/header"
 import "./atricle.css"
 
 
@@ -34,45 +35,46 @@ class Oauth extends Component {
   // 渲染 Dom
   render() {
     return (
-      <div className="g-container atricle">
-        <Progress show={this.state.progressShow} />
-        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-        <div className="content">
-          <div className="head">
-            <div className="usercover-image" />
-            <div className="info">
-              <div className="div-user-image">
-                <img src={this.state.url} alt="头像" />
-              </div>
-              <h2 className="name">
-                梁同桌
-                <a style={{ display: this.state.githubUrl ? '' : 'none' }}
-                  href={this.state.githubUrl}>
-                  GitHub
-                </a>
-                <a style={{ display: this.state.blog ? '' : 'none' }}
-                  href={this.state.blog}>
-                  个人网页
-                </a>
-                <div className="bio">
-                  {this.state.bio}
+      <div>
+        <Header history={this.props.history} />
+        <div className="g-container atricle">
+          <Progress show={this.state.progressShow} />
+          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+          <div className="content">
+            <div className="head">
+              <div className="usercover-image" />
+              <div className="info">
+                <div className="div-user-image">
+                  <img src={this.state.url} alt="头像" />
                 </div>
-              </h2>
+                <h2 className="name">
+                  梁同桌
+                <a style={{ display: this.state.githubUrl ? '' : 'none' }}
+                    href={this.state.githubUrl}>
+                    GitHub
+                </a>
+                  <a style={{ display: this.state.blog ? '' : 'none' }}
+                    href={this.state.blog}>
+                    个人网页
+                </a>
+                  <div className="bio">
+                    {this.state.bio}
+                  </div>
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
-
-
-        <div className="left">
-          <div className="cart">
-            adadadhjkhkh
+          <div className="left">
+            <div className="cart">
+              adadadhjkhkh
           </div>
-        </div>
-        <div className="right">
-          <div className="cart">
-            <div className="right-title">个人成就</div>
-            <div className="right-item">发表文章 20 篇</div>
-            <div className="right-item">留言 20 条</div>
+          </div>
+          <div className="right">
+            <div className="cart">
+              <div className="right-title">个人成就</div>
+              <div className="right-item">发表文章 20 篇</div>
+              <div className="right-item">留言 20 条</div>
+            </div>
           </div>
         </div>
       </div>
