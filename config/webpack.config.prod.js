@@ -62,10 +62,6 @@ module.exports = {
         require.resolve('./polyfills'),
         paths.appIndexJs
       ],
-      login: [
-        require.resolve('./polyfills'),
-        paths.appSrc + '/login.js'
-      ], 
       oauth: [
         require.resolve('./polyfills'),
         paths.appSrc + '/oauth.js'
@@ -253,24 +249,6 @@ module.exports = {
       inject: true,
       chunks: ["index"],
       template: paths.appHtml,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-    }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      chunks: ["login"],
-      template: paths.appHtml,
-      filename: 'login.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

@@ -38,11 +38,6 @@ module.exports = {
         require.resolve('react-dev-utils/webpackHotDevClient'),
         paths.appIndexJs,
     ],
-    login:[
-        require.resolve('./polyfills'),
-        require.resolve('react-dev-utils/webpackHotDevClient'),
-        paths.appSrc + '/login.js',
-    ], 
      oauth:[
       require.resolve('./polyfills'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
@@ -212,12 +207,6 @@ module.exports = {
       inject: true,
       chunks:["index"],
       template: paths.appHtml,
-    }),
-    new HtmlWebpackPlugin({
-        inject: true,
-        chunks:["login"],
-        template:paths.appHtml,
-        filename:'login.html'
     }),
     new HtmlWebpackPlugin({
       inject: true,

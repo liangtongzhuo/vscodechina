@@ -6,7 +6,6 @@ import SnackBar from "../component/snackbar"
 
 import "./login.css"
 
-
 class Login extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
@@ -26,21 +25,18 @@ class Login extends Component {
   // 加载一次，Dom 未加载
   componentWillMount() {
 
-
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
 
-  
   }
-
   // 登陆
   _clickLogin(e) {
     this.setState({ progressShow: true })
     const mail = this.state.mail
     const password = this.state.password
     AV.User.logIn(mail, password).then(loginedUser => {
-      this.props.history.push('/')
+      this.props.history.push('/')    
     }).catch(error => {
       console.log(error)
       this.setState({ progressShow: false })
@@ -64,7 +60,7 @@ class Login extends Component {
     user.setPassword(password)
     user.set('name', mail.split('@')[0])
     user.signUp().then(loginedUser => {
-      this.props.history.push('/')
+      this.props.history.push('/')    
     }).catch(error => {
       this.setState({ progressShow: false })
       if (error.code === 203)
@@ -100,7 +96,7 @@ class Login extends Component {
       })
   }
   _onGitHub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://vscode-china.com/oauth'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://vscode-china.com/oauth.html'
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })
@@ -142,7 +138,7 @@ class Login extends Component {
   }
   // back 主页
   _backHom() {
-    this.props.history.push('/')
+    this.props.history.push('/')    
   }
   // 渲染 Dom
   render() {
