@@ -6,7 +6,6 @@ import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import "./oauth.css"
 
-
 class Oauth extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {

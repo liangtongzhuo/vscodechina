@@ -17,6 +17,7 @@ class Header extends Component {
     this._clickHead = this._clickHead.bind(this)
     this._handleClose = this._handleClose.bind(this)
     this._handleMenuClose = this._handleMenuClose.bind(this)
+    this._clickLogin = this._clickLogin.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -63,7 +64,7 @@ class Header extends Component {
         <img className="headimg" onClick={this._clickHead} src={this.state.url} alt="header" />
       </div>) :
       (<div className="right">
-        <Button className="button login"><NavLink to="/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
+        <Button className="button login" onClick={this._clickLogin}>&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</Button>
       </div>)
   }
   // 点击了头像
@@ -73,6 +74,10 @@ class Header extends Component {
       anchorEl: e.currentTarget,
       menuShow: !menuShow
     })
+  }
+  // 点击了登陆
+  _clickLogin(e) {
+    this.props.history.push('/login')
   }
   // 点击 item
   _handleClose(i,e) {
