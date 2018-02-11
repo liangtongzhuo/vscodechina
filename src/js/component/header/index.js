@@ -56,14 +56,14 @@ class Header extends Component {
   _userShow() {
     return AV.User.current() ?
       (<div className="right">
-        <Button className="button buttonw "><NavLink to="other/write/" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
+        <Button className="button buttonw "><NavLink to="/write" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
         <IconButton className="bell">
           <Bell className="g-color-gray-fill" />
         </IconButton>
         <img className="headimg" onClick={this._clickHead} src={this.state.url} alt="header" />
       </div>) :
       (<div className="right">
-        <Button className="button login"><NavLink to="/other/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
+        <Button className="button login"><NavLink to="/login" className="a" activeClassName="selected">&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</NavLink></Button>
       </div>)
   }
   // 点击了头像

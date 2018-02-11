@@ -9,7 +9,7 @@ const paths = require('./paths');
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
-module.exports = function (proxy, allowedHost) {
+module.exports = function(proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -81,9 +81,9 @@ module.exports = function (proxy, allowedHost) {
     overlay: false,
     historyApiFallback: {
       disableDotRule: true,
-      // 指明哪些路径映射到哪个html
       rewrites: [
-        { from: /^\/admin.html/, to: '/build/admin.html' },
+        { from: /^\/login.html/, to: '/build/login.html' },
+        { from: /^\/oauth.html/, to: '/build/oauth.html' },
       ]
     },
     public: allowedHost,

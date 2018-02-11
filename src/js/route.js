@@ -19,21 +19,21 @@ class App extends Component {
         <div>
           <Switch>
             {/* 登陆 */}
-            <Route exact path="/other/login" component={Login} />
+            <Route exact path="/login" component={Login} />
             {/* 第三方验证 */}
-            <Route exact path="/other/oauth" component={Oauth} />
+            <Route exact path="/oauth" component={Oauth} />
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
             {/* 个人文章展示 */}
             <Route exact path="/atricle/:atricleId?" component={Atricle} />
             {/* 写文章界面 */}
-            <Route exact path="/other/write/:id?" component={Write} />
+            <Route exact path="/write/:id?" component={Write} />
             {/* 主页文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>
         </div>
       </Router>
-    );
+    )
   }
 }
 

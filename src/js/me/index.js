@@ -3,6 +3,7 @@ import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, D
 import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
+import Header from "../component/header"
 import "./me.css"
 
 
@@ -112,7 +113,7 @@ class Me extends Component {
   }
   // 授权页面
   _buttonGithub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://localhost:3000/other/oauth&state=' + AV.User.current().id
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://localhost:3000/oauth&state=' + AV.User.current().id
   }
   _open(e) {
     this.setState({ show: true })
@@ -124,101 +125,104 @@ class Me extends Component {
   render() {
 
     return (
-      <div className="g-container me">
-        <Progress show={this.state.progressShow} />
-        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-        <div className="content">
-          <h3>个人资料</h3>
-          {/* 头像 */}
-          {/* 邮箱 */}
-          <div className="cell">
-            <TextField
-              disabled
-              className="item"
-              value={this.state.email}
-              label={'邮箱: 用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
-            />
-          </div>
-          {/* 名字 */}
-          <div className="cell">
-            <TextField
-              required
-              error={this.state.nameError}
-              className="item"
-              value={this.state.name}
-              label={this.state.nameError ? '昵称不能为空' : '昵称'}
-              onChange={this._onChangeName}
-            />
-          </div>
-          {/* 个人主页 */}
-          <div className="cell">
-            <TextField
-              className="item"
-              value={this.state.blog}
-              label={'个人主页'}
-              onChange={this._onChangebBlog}
-            />
-          </div>
-          {/* github_url */}
-          <div className="cell">
-            <TextField
-              disabled
-              className="item"
-              value={this.state.github_url}
-              label={'GitHub 地址'}
-            />
-          </div>
-          {/* 介绍 */}
-          <div className="cell">
-            <TextField
-              multiline
-              rowsMax="4"
-              className="item"
-              value={this.state.bio}
-              label={'个人签名'}
-              onChange={this._onChangebBio}
-            />
-          </div>
-          <div className="cell">
-            <Button className="button" onClick={this._clickSave}>
-              保存
+      <div>
+        <Header history={this.props.history} />
+        <div className="g-container me">
+          <Progress show={this.state.progressShow} />
+          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+          <div className="content">
+            <h3>个人资料</h3>
+            {/* 头像 */}
+            {/* 邮箱 */}
+            <div className="cell">
+              <TextField
+                disabled
+                className="item"
+                value={this.state.email}
+                label={'邮箱: 用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
+              />
+            </div>
+            {/* 名字 */}
+            <div className="cell">
+              <TextField
+                required
+                error={this.state.nameError}
+                className="item"
+                value={this.state.name}
+                label={this.state.nameError ? '昵称不能为空' : '昵称'}
+                onChange={this._onChangeName}
+              />
+            </div>
+            {/* 个人主页 */}
+            <div className="cell">
+              <TextField
+                className="item"
+                value={this.state.blog}
+                label={'个人主页'}
+                onChange={this._onChangebBlog}
+              />
+            </div>
+            {/* github_url */}
+            <div className="cell">
+              <TextField
+                disabled
+                className="item"
+                value={this.state.github_url}
+                label={'GitHub 地址'}
+              />
+            </div>
+            {/* 介绍 */}
+            <div className="cell">
+              <TextField
+                multiline
+                rowsMax="4"
+                className="item"
+                value={this.state.bio}
+                label={'个人签名'}
+                onChange={this._onChangebBio}
+              />
+            </div>
+            <div className="cell">
+              <Button className="button" onClick={this._clickSave}>
+                保存
             </Button>
-            <div className="divb">
-              <Button className="b" onClick={this._open}>
-                GITHUB授权
+              <div className="divb">
+                <Button className="b" onClick={this._open}>
+                  GITHUB授权
               </Button>
-              <Button className="b" onClick={this._emailVerify}>
-                验证邮箱
+                <Button className="b" onClick={this._emailVerify}>
+                  验证邮箱
               </Button>
-              <Button className="b" onClick={this._upDataPassword}>
-                修改密码
+                <Button className="b" onClick={this._upDataPassword}>
+                  修改密码
               </Button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* model */}
-        <Dialog
-          open={this.state.show}
-          onClose={this._close}
-        >
-          <DialogTitle >{"请注意，少部分人来说是危险操作"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              关联 GitHub 数据，同步昵称、GitHub 地址、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
+          {/* model */}
+          <Dialog
+            open={this.state.show}
+            onClose={this._close}
+          >
+            <DialogTitle >{"请注意，少部分人来说是危险操作"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                关联 GitHub 数据，同步昵称、GitHub 地址、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
               <br /><br />
-              如果当前账户邮箱与 GitHub 绑定邮箱一致则不存在此问题 。
+                如果当前账户邮箱与 GitHub 绑定邮箱一致则不存在此问题 。
             </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this._buttonGithub} >
-              授权更新
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this._buttonGithub} >
+                授权更新
             </Button>
-            <Button onClick={this._close} autoFocus>
-              取消
+              <Button onClick={this._close} autoFocus>
+                取消
             </Button>
-          </DialogActions>
-        </Dialog>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     )
   }
@@ -249,6 +253,5 @@ class Me extends Component {
 
   }
 }
-
 
 export default Me
