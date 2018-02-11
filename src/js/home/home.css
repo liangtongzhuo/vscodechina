@@ -23,27 +23,31 @@
   line-height: 25px;
 }
 
-.home .right  .footer{
+.home .footer{
   margin-left: 13px;
   margin-top: 5px;  
 }
 
-.home .right  .footer .footer-dot{
+.home .footer .footer-dot{
   font-size: 13px;
   line-height: 2;
     color: #8590a6;
 }
 
-.home .right  .footer .footer-dot:after {
+.home .footer .footer-dot:after {
   margin: 0 5px;
   content: "\B7";
 }
 
-.home .right .footer .footer-item{
+.home .footer .footer-item{
   text-decoration: none;
   display: inline-block;
   font-size: 13px;
   color: #8590a6;
+}
+
+.home .moblie {
+  display: none;
 }
 
 @media (max-width: 1024px) {
@@ -55,5 +59,9 @@
   }
   .home .right{
     display: none;
+  }
+
+  .home .moblie {
+    display: block;
   }
 }

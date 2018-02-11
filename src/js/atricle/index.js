@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-// import { Button } from 'material-ui'
+import md5 from 'blueimp-md5'
 import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
-import md5 from 'blueimp-md5'
 import Header from "../component/header"
+import AtricleItem from "../component/atricleItem"
+import Message from "../component/message"
 import "./atricle.css"
 
 
@@ -14,18 +15,40 @@ class Oauth extends Component {
     super(props)
 
     const { atricleId } = this.props.match.params
-    let url, githubUrl, blog, bio
-    if (!atricleId) {
-      url = AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=180*180&d=identicon&r=g'
-      githubUrl = AV.User.current().get('github_url')
-      blog = AV.User.current().get('blog')
-      bio = AV.User.current().get('bio')
-    }
-
-    this.state = { url, githubUrl, blog, bio, atricleId }
+    this.state = { atricleId, items: [] }
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
+    const {atricleId} = this.state
+
+    // 查询文章
+    this.setState({ progressShow: true })
+    const query = new AV.Query('Atricle')
+    if (!atricleId) {
+      const url = AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=180*180&d=identicon&r=g'
+      const githubUrl = AV.User.current().get('github_url')
+      const blog = AV.User.current().get('blog')
+      const bio = AV.User.current().get('bio')
+      this.setState({
+        url, githubUrl, blog, bio
+      })
+      
+      query.equalTo('user', AV.User.current())
+      query.limit(1000)
+      query.descending('createdAt')
+      query.include('user')
+      query.find().then((items) => {
+        this.setState({
+          items: items,
+          progressShow: false
+        });
+      }).catch((error) => {
+        this._snackBarOpen('讨厌，网络错误了')
+        this.setState({ progressShow: false })
+      })
+    } else {
+
+    }
 
   }
   // 加载一次，这里 Dom 已经加载完成
@@ -34,13 +57,16 @@ class Oauth extends Component {
   }
   // 渲染 Dom
   render() {
+    const items = this.state.items.map((item, index) =>
+      <AtricleItem key={index} item={item} MessageChildren={Message} />
+    )
     return (
       <div>
         <Header history={this.props.history} />
         <div className="g-container atricle">
           <Progress show={this.state.progressShow} />
           <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-          <div className="content">
+          <div className="acontent">
             <div className="head">
               <div className="usercover-image" />
               <div className="info">
@@ -64,17 +90,15 @@ class Oauth extends Component {
               </div>
             </div>
           </div>
-          <div className="left">
-            <div className="cart">
-              adadadhjkhkh
-          </div>
-          </div>
           <div className="right">
             <div className="cart">
               <div className="right-title">个人成就</div>
               <div className="right-item">发表文章 20 篇</div>
               <div className="right-item">留言 20 条</div>
             </div>
+          </div>
+          <div className="left">
+            {items}
           </div>
         </div>
       </div>

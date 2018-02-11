@@ -46,7 +46,7 @@ class Home extends Component {
     )
     return (
       <div>
-        <Header history={this.props.history}/>
+        <Header history={this.props.history} />
         <div className="g-container home">
           <Progress show={this.state.progressShow} />
           <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
@@ -68,6 +68,15 @@ class Home extends Component {
               <a className="footer-item" href="https://leancloud.cn">基于 LeanCloud</a>
             </footer>
           </div>
+          <footer className="footer moblie">
+            <a className="footer-item" href="http://www.liangtongzhuo.com">梁同桌博客</a>
+            <span className="footer-dot"></span>
+            <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>
+            <span className="footer-dot"></span>
+            <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>
+            <span className="footer-dot"></span>
+            <a className="footer-item" href="https://leancloud.cn">基于 LeanCloud</a>
+          </footer>
         </div >
       </div>
     )

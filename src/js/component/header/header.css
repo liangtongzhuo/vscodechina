@@ -53,7 +53,7 @@
 .header .right .button{
     background: #0f88eb;
     color: #fff;
-    padding: 3px;;
+    padding: 3px;
     min-width: 0;
     min-height: 0;
     width: 80px;
@@ -99,7 +99,8 @@
         display: none;
     }
     .header .right .button {
-        width: 100%
+        width: 100%;
+        padding: 6px;
     }
     .header .right .bell {
         margin: 0 20px 0 0;
