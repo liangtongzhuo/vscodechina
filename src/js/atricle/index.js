@@ -16,17 +16,17 @@ class Oauth extends Component {
   constructor(props, context) {
     super(props)
 
-    const { atricleId } = this.props.match.params
-    this.state = { atricleId, items: [], messages: [] }
+    const { userId } = this.props.match.params
+    this.state = { userId, items: [], messages: [] }
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
-    const { atricleId } = this.state
+    const { userId } = this.state
 
     // 查询文章
     this.setState({ progressShow: true })
     const query = new AV.Query('Atricle')
-    if (!atricleId) {
+    if (!userId) {
       const url = AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=180*180&d=identicon&r=g'
       const githubUrl = AV.User.current().get('github_url')
       const blog = AV.User.current().get('blog')
@@ -134,6 +134,7 @@ class Oauth extends Component {
       </div>
     )
   }
+ 
   _snackBarOpen(content, time = 2000) {
     this.setState({ snackBarOpen: true, content: content })
     setTimeout(() => {

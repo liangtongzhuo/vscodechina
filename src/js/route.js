@@ -25,7 +25,7 @@ class App extends Component {
             {/* 单文章展示 */}
             <Route exact path="/read/:atricleId?" component={Read} />
             {/* 个人文章展示 */}
-            <Route exact path="/atricle/:atricleId?" component={Atricle} />
+            <Route exact path="/atricle/:userId?" component={Atricle} />
             {/* 写文章界面 */}
             <Route exact path="/write/:id?" component={Write} />
             {/* 主页文章列表 */}

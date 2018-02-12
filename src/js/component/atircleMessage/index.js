@@ -13,7 +13,8 @@ class AtircleMessage extends Component {
     const time = this._getDateDiff(item.createdAt)
 
     this.state = { message, AtricleId, AtricleTitle, time }
-
+    
+    this._clickSkitRead = this._clickSkitRead.bind(this)    
     this._getDateDiff = this._getDateDiff.bind(this)
   }
 
@@ -24,7 +25,9 @@ class AtircleMessage extends Component {
       &nbsp; {this.state.time}
     </div>)
   }
-
+  _clickSkitRead(e) {
+    this.props.history.push('/read/' + this.state.AtricleId)
+  }
   _getDateDiff(dateTimeStamp) {
     const minute = 1000 * 60
     const hour = minute * 60
