@@ -53,6 +53,7 @@ class Oauth extends Component {
 
       // 查询留言
       const messages = new AV.Query('Message')
+      messages.limit(20)
       messages.equalTo('user', AV.User.current())
       messages.addDescending('like')
       messages.addDescending('createdAt')
