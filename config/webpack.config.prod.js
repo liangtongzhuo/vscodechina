@@ -65,10 +65,6 @@ module.exports = {
       oauth: [
         require.resolve('./polyfills'),
         paths.appSrc + '/oauth.js'
-      ],
-      404: [
-        require.resolve('./polyfills'),
-        paths.appIndexJs
       ]
     },
   output: {
@@ -271,24 +267,6 @@ module.exports = {
       chunks: ["oauth"],
       template: paths.appHtml,
       filename: 'oauth.html',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-    }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      chunks: ["404"],
-      template: paths.appHtml,
-      filename: '404.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

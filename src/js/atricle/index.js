@@ -6,6 +6,8 @@ import SnackBar from "../component/snackbar"
 import Header from "../component/header"
 import AtricleItem from "../component/atricleItem"
 import Message from "../component/message"
+import AtircleMessage from "../component/atircleMessage"
+
 import "./atricle.css"
 
 
@@ -15,11 +17,11 @@ class Oauth extends Component {
     super(props)
 
     const { atricleId } = this.props.match.params
-    this.state = { atricleId, items: [] }
+    this.state = { atricleId, items: [], messages: [] }
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
-    const {atricleId} = this.state
+    const { atricleId } = this.state
 
     // 查询文章
     this.setState({ progressShow: true })
@@ -29,10 +31,12 @@ class Oauth extends Component {
       const githubUrl = AV.User.current().get('github_url')
       const blog = AV.User.current().get('blog')
       const bio = AV.User.current().get('bio')
+      const name = AV.User.current().get('name')
+
       this.setState({
-        url, githubUrl, blog, bio
+        url, githubUrl, blog, bio, name
       })
-      
+
       query.equalTo('user', AV.User.current())
       query.limit(1000)
       query.descending('createdAt')
@@ -46,6 +50,23 @@ class Oauth extends Component {
         this._snackBarOpen('讨厌，网络错误了')
         this.setState({ progressShow: false })
       })
+
+      // 查询留言
+      const messages = new AV.Query('Message')
+      messages.equalTo('user', AV.User.current())
+      messages.addDescending('like')
+      messages.addDescending('createdAt')
+      messages.include('user')
+      messages.include('atricle')
+      messages.find().then((messages) => {
+        this.setState({
+          messages: messages
+        })
+      }).catch((error) => {
+        this._snackBarOpen('讨厌，网络错误了')
+        this.setState({ progressShow: false })
+      })
+
     } else {
 
     }
@@ -58,7 +79,11 @@ class Oauth extends Component {
   // 渲染 Dom
   render() {
     const items = this.state.items.map((item, index) =>
-      <AtricleItem key={index} item={item} MessageChildren={Message} />
+      <AtricleItem key={index} history={this.props.history} item={item} MessageChildren={Message} />
+    )
+
+    const messages = this.state.messages.map((item, index) =>
+      <AtircleMessage key={index} item={item} />
     )
     return (
       <div>
@@ -74,7 +99,7 @@ class Oauth extends Component {
                   <img src={this.state.url} alt="头像" />
                 </div>
                 <h2 className="name">
-                  梁同桌
+                    {this.state.name}
                 <a style={{ display: this.state.githubUrl ? '' : 'none' }}
                     href={this.state.githubUrl}>
                     GitHub
@@ -91,14 +116,19 @@ class Oauth extends Component {
             </div>
           </div>
           <div className="right">
-            <div className="cart">
+            <div className="atriclecart">
               <div className="right-title">个人成就</div>
-              <div className="right-item">发表文章 20 篇</div>
-              <div className="right-item">留言 20 条</div>
+              <div className="right-item">发表文章 {this.state.items.length} 篇</div>
+              <div className="right-item">留言 {this.state.messages.length} 条</div>
+            </div>
+            <div className="atriclecart" style={{ display: messages.length !== 0 ? '' : 'none' }}>
+              {messages}
             </div>
           </div>
           <div className="left">
-            {items}
+            <div className="cart" style={{ display: items.length !== 0 ? '' : 'none' }}>
+              {items}
+            </div>
           </div>
         </div>
       </div>
@@ -131,5 +161,6 @@ class Oauth extends Component {
 
   }
 }
+
 
 export default Oauth

@@ -82,8 +82,7 @@ module.exports = function(proxy, allowedHost) {
     historyApiFallback: {
       disableDotRule: true,
       rewrites: [
-        { from: /^\/oauth.html/, to: '/build/oauth.html' },
-        { from: /^\/404.html/, to: '/build/404.html' },        
+        { from: /^\/oauth.html/, to: '/build/oauth.html' }
       ]
     },
     public: allowedHost,

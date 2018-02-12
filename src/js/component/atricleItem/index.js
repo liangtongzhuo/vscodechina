@@ -4,7 +4,7 @@ import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
 import md5 from 'blueimp-md5'
-import { Bottom, Good, Message, Share } from "../svg.js" //,Collection
+import { Bottom, Good, Message, Read } from "../svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
 import Progress from "../progress"
 import SnackBar from "../snackbar"
@@ -15,6 +15,7 @@ class AtricleItem extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
+
     const title = props.item.get('title')
     //从 marked 提取文本与图片地址
     const markdown = marked(props.item.get('data'))
@@ -22,16 +23,31 @@ class AtricleItem extends Component {
     const imgObj = props.item.get('data').match(/!\[(.*?)\]\((.*?)\)/) || []
     const imgUrl = imgObj.length >= 2 ? imgObj[2] : ''
 
-    let likeBool = false;
+    let likeBool = false
     if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
       likeBool = true
     }
     const messageCount = this.props.item.get('messageCount')
-
     let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
 
-
-    this.state = { title, data, imgUrl, markSource: props.item.get('data'), like: props.item.get('like'), likeBool, messageCount, headUrl }
+    let showRead, messagesShow
+    // 单独页面，默认都打开
+    if (!this.props.history) {
+      showRead = true
+      messagesShow = true
+    }
+    this.state = {
+      title,
+      data,
+      imgUrl,
+      markSource: props.item.get('data'),
+      like: props.item.get('like'),
+      likeBool,
+      messageCount,
+      headUrl,
+      showRead,
+      messagesShow,
+    }
 
     this._clickRead = this._clickRead.bind(this)
     this._readInfo = this._readInfo.bind(this)
@@ -40,6 +56,7 @@ class AtricleItem extends Component {
     this._messageSend = this._messageSend.bind(this)
     this._snackBarOpen = this._snackBarOpen.bind(this)
     this._cloneButton = this._cloneButton.bind(this)
+    this._clickSkitRead = this._clickSkitRead.bind(this)
   }
 
   render() {
@@ -86,10 +103,9 @@ class AtricleItem extends Component {
           {/* <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
               </Button> */}
-          <Button className="button" onClick={this._clickShare}>
-            <Share className="g-color-gray-fill" />&nbsp; 分享
+          <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.props.history ? '' : 'none' }}>
+            <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
               </Button>
-
           {this._cloneButton()}
         </div>
         <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
@@ -167,8 +183,8 @@ class AtricleItem extends Component {
   //   console.log('-----收藏')
   // }
   // 分享
-  _clickShare(e) {
-    console.log('-----分享')
+  _clickSkitRead(e) {
+    this.props.history.push('/read/' + this.props.item.id)
   }
   _getDateDiff(dateTimeStamp) {
     const minute = 1000 * 60

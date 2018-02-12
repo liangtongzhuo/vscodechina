@@ -42,7 +42,7 @@ class Home extends Component {
   // 渲染 Dom
   render() {
     const items = this.state.items.map((item, index) =>
-      <AtricleItem key={index} item={item} MessageChildren={Message} />
+      <AtricleItem key={index} history={this.props.history} item={item} MessageChildren={Message} />
     )
     return (
       <div>

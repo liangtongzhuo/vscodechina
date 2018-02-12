@@ -1,0 +1,9 @@
+.atircleMessage {
+    padding: 10px 20px;
+    line-height: 22px;
+    font-size: 14px;
+}
+
+.atircleMessage .color{
+    color: black;
+}

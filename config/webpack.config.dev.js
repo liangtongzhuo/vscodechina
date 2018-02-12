@@ -42,11 +42,6 @@ module.exports = {
       require.resolve('./polyfills'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
       paths.appSrc + '/oauth.js',
-    ],
-    404: [
-      require.resolve('./polyfills'),
-      require.resolve('react-dev-utils/webpackHotDevClient'),
-      paths.appIndexJs,
     ]
   },
   output: {
@@ -218,12 +213,6 @@ module.exports = {
       chunks: ["oauth"],
       template: paths.appHtml,
       filename: 'oauth.html'
-    }),
-     new HtmlWebpackPlugin({
-      inject: true,
-      chunks: ["404"],
-      template: paths.appHtml,
-      filename: '404.html'
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

@@ -142,4 +142,7 @@
     margin-right: 10px;
     padding: 8px 5px 8px 10px;    
   }
+  .atricleItem .tool .reply-butoon{
+    display: none;
+  }
 }
