@@ -55,7 +55,9 @@ class Home extends Component {
           </div>
           <div className="right">
             <div className="card">
-              友情提示：<br />
+              本站主要愿景：<br />
+              用于交流微软 Visual Studio Code 编辑器一些列内容，也可交流任何与计算机相关内容。<br />
+              小小提示：<br />
               少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
           </div>
             <footer className="footer">
