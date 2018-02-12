@@ -112,5 +112,14 @@
         width: 100%;
         padding: 10px 0 0 0;
     }
+
+    .atricle .acontent .head .info .div-user-image{
+        display: inline-flex;
+        padding: 1px;
+        border: 4px solid #fff;
+        border-radius: 4px;
+        width: 100px;
+        height: 100px;
+    }
       
 }
