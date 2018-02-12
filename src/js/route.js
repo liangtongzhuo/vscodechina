@@ -15,7 +15,7 @@ import Oauth from "./oauth"
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router hashType="hashbang">
         <div>
           <Switch>
             {/* 登陆 */}
