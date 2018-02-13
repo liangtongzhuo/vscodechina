@@ -86,6 +86,16 @@ class MessageGood extends Component {
     }
 }
 
+class Edid extends Component {
+    render() {
+        return (
+            <svg className={this.props.className} viewBox="0 3 24 20" width="1.2em" height="1.2em" >
+                <path d="M16.886 3A4.114 4.114 0 0 1 21 7.114v9.772A4.114 4.114 0 0 1 16.886 21H7.114A4.114 4.114 0 0 1 3 16.886V7.114A4.114 4.114 0 0 1 7.114 3h9.772zM7.542 14.793l-.595 1.985a.22.22 0 0 0 .275.275l1.984-.595a2.36 2.36 0 0 0 .991-.592l4.82-4.82a.295.295 0 0 0 0-.416L13.37 8.983a.295.295 0 0 0-.417 0l-4.82 4.82c-.275.277-.478.617-.59.99zm9.272-6.826l-.781-.78a.849.849 0 0 0-1.202 0l-.952.951c-.11.11-.11.29 0 .4l1.582 1.583a.283.283 0 0 0 .4 0l.953-.952a.85.85 0 0 0 0-1.202z" ></path>
+            </svg>
+        )
+    }
+}
 
 
-export { Bottom, Good, Message, Collection, Share, Reply, MessageGood, Read };
+
+export { Bottom, Good, Message, Collection, Share, Reply, MessageGood, Read ,Edid};

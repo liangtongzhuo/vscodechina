@@ -4,7 +4,7 @@ import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
 import md5 from 'blueimp-md5'
-import { Bottom, Good, Message, Read } from "../svg.js" //,Collection
+import { Bottom, Good, Message, Read, Edid } from "../svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
 import Progress from "../progress"
 import SnackBar from "../snackbar"
@@ -30,11 +30,14 @@ class AtricleItem extends Component {
     const messageCount = this.props.item.get('messageCount')
     let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
 
-    let showRead, messagesShow
+    let showRead, messagesShow, isEdid
     // 单独页面，默认都打开
     if (!this.props.history) {
       showRead = true
       messagesShow = true
+    }
+    if (AV.User.current() && AV.User.current().id === props.item.get('user').id){
+        isEdid = true
     }
     this.state = {
       title,
@@ -47,6 +50,7 @@ class AtricleItem extends Component {
       headUrl,
       showRead,
       messagesShow,
+      isEdid
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -57,6 +61,7 @@ class AtricleItem extends Component {
     this._snackBarOpen = this._snackBarOpen.bind(this)
     this._cloneButton = this._cloneButton.bind(this)
     this._clickSkitRead = this._clickSkitRead.bind(this)
+    this._clickSkitEdid = this._clickSkitEdid.bind(this)
   }
 
   render() {
@@ -106,6 +111,10 @@ class AtricleItem extends Component {
           <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.props.history ? '' : 'none' }}>
             <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
               </Button>
+
+          <Button className="button reply-butoon" onClick={this._clickSkitEdid} style={{ display: this.state.isEdid ? '' : 'none' }}>
+            <Edid className="g-color-gray-fill" />&nbsp; 编辑文章
+              </Button>
           {this._cloneButton()}
         </div>
         <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
@@ -140,7 +149,9 @@ class AtricleItem extends Component {
       )
     }
   }
-
+  _clickSkitEdid(e) {
+    this.props.history.push('/write/' + this.props.item.id)
+  }
   _snackBarOpen(content, time = 2000) {
     this.setState({ snackBarOpen: true, content: content })
     setTimeout(() => {

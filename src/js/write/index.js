@@ -15,7 +15,28 @@ class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { title: '标题', data: dataContent, atricleTagIndex: 0 }
+    this.state = { title: '标题', data: dataContent, atricleTagIndex: 0}         
+
+    const atricleId = this.props.match.params
+    if (atricleId) {
+      const atricle = AV.Object.createWithoutData('Atricle', atricleId)
+      atricle.fetch().then(_ => {
+        this.state = {
+          title: atricle.get('title'),
+          data: atricle.get('data'),
+          atricleTagIndex: atricle.get('tag'),
+          progressShow: false
+        }
+        console.log(atricle.get('title'))
+      }).catch(error => {
+        console.log(error)
+        this._snackBarOpen('网络错误啦， 3 秒后跳转我的页面')
+        setTimeout(_ => {
+          this.props.history.push('/atricle')
+        }, 3000)
+      })
+    }
+
 
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
@@ -52,9 +73,15 @@ class Write extends Component {
       this._snackBarOpen('没有内容，又骗我～')
       return
     }
-
     this.setState({ progressShow: true })
-    const atricle = new Atricle()
+
+    const atricleId = this.props.match.params
+    let atricle
+    if (atricleId) {
+      atricle = AV.Object.createWithoutData('Atricle', atricleId)
+    } else {
+      atricle = new Atricle()
+    }
     atricle.set('title', title)
     atricle.set('data', data)
     atricle.set('user', AV.User.current())
@@ -133,7 +160,7 @@ class Write extends Component {
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         <div className="head">
-          <input onChange={this._onChangeTitle} placeholder="输入文章标题..." maxLength="80" />
+          <input onChange={this._onChangeTitle} value={this.state.title} placeholder="输入文章标题..." maxLength="80" />
           <div>
             <Button className="button" onClick={this._clickSave}>保存</Button>
             <div className="upfile" >上传图片<input ref="upFile" type="file" id="img" onChange={this._clickUpFile} /></div>
