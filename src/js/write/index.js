@@ -9,12 +9,13 @@ import "github-markdown-css"
 import "./write.css"
 
 const dataContent = '> 少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)'
+const Atricle = AV.Object.extend('Atricle')
 
 class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { title: '标题', data: dataContent }
+    this.state = { title: '标题', data: dataContent, atricleTagIndex: 0 }
 
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
@@ -22,6 +23,7 @@ class Write extends Component {
     this._clickUpFile = this._clickUpFile.bind(this)
     this._clickTextarea = this._clickTextarea.bind(this)
     this._blurTextarea = this._blurTextarea.bind(this)
+    this._selectClick = this._selectClick.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -43,7 +45,7 @@ class Write extends Component {
   _clickSave(e) {
     const { title, data } = this.state;
     if (title.length === 0) {
-      this._snackBarOpen('没有标题，我是不同意你上传的，哼～')
+      this._snackBarOpen('没有标题，我是不同意你发布的，哼～')
       return
     }
     if (data === dataContent) {
@@ -52,16 +54,17 @@ class Write extends Component {
     }
 
     this.setState({ progressShow: true })
-    var Atricle = AV.Object.extend('Atricle')
-    var atricle = new Atricle()
+    const atricle = new Atricle()
     atricle.set('title', title)
     atricle.set('data', data)
     atricle.set('user', AV.User.current())
+    atricle.set('tag', options[this.state.atricleTagIndex])
+
     // 新建一个 ACL 实例
     const acl = new AV.ACL()
     acl.setPublicReadAccess(true)
-    acl.setWriteAccess(AV.User.current(),true)
-    atricle.save().then(todo => {
+    acl.setWriteAccess(AV.User.current(), true)
+    atricle.save().then(() => {
       this.setState({ progressShow: false })
       this.props.history.push('/')
     }).catch((error) => {
@@ -104,8 +107,9 @@ class Write extends Component {
     }
     return new Blob([u8arr], { type: mime })
   }
+  // 选择那个类型文章
   _selectClick(index) {
-    console.log(index)
+    this.setState({ atricleTagIndex: index })
   }
   // 点击了 清空 textarea 
   _clickTextarea() {
@@ -184,7 +188,7 @@ class SelectListMenu extends Component {
     super(props)
     this.state = {
       anchorEl: null,
-      selectedIndex: 1
+      selectedIndex: 0
     }
   }
 

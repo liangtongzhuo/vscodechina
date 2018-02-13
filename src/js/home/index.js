@@ -25,7 +25,11 @@ class Home extends Component {
   _net(page) {
     this.setState({ progressShow: true })
     const query = new AV.Query('Atricle')
-    if (page) query.contains('tag', decodeURI(page)) //注意转码    
+    if (page === '精华') {
+      query.equalTo('essence', 1)
+    } else if (page) {
+      query.contains('tag', page)
+    }
     query.limit(1000)
     query.descending('createdAt')
     query.include('user')
@@ -42,7 +46,7 @@ class Home extends Component {
   // 渲染 Dom
   render() {
     const items = this.state.items.map((item, index) =>
-      <AtricleItem key={index} history={this.props.history} item={item} MessageChildren={Message} />
+      <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )
     return (
       <div>

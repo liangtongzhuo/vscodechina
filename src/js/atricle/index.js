@@ -80,11 +80,11 @@ class Oauth extends Component {
   // 渲染 Dom
   render() {
     const items = this.state.items.map((item, index) =>
-      <AtricleItem key={index} history={this.props.history} item={item} MessageChildren={Message} />
+      <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )
 
     const messages = this.state.messages.map((item, index) =>
-      <AtircleMessage key={index} item={item} />
+      <AtircleMessage key={item.id} item={item} />
     )
     return (
       <div>
