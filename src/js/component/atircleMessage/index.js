@@ -19,8 +19,8 @@ class AtircleMessage extends Component {
   }
 
   render() {
-    return (<div className="atircleMessage g-color-gray">
-      在 &nbsp;<a href={"/read/" + this.state.AtricleId} className="color">{this.state.AtricleTitle}</a>
+    return (<div className="atircleMessage g-color-gray" onClick={this._clickSkitRead}>
+      在 &nbsp;<a className="color">{this.state.AtricleTitle}</a>
       &nbsp;文章评论:&nbsp;<span className="color">{this.state.message}</span>
       &nbsp; {this.state.time}
     </div>)

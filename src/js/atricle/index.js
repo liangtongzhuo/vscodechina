@@ -84,7 +84,7 @@ class Oauth extends Component {
     )
 
     const messages = this.state.messages.map((item, index) =>
-      <AtircleMessage key={item.id} item={item} />
+      <AtircleMessage history={this.props.history}  key={item.id} item={item} />
     )
     return (
       <div>

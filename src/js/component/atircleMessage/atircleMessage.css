@@ -7,3 +7,8 @@
 .atircleMessage .color{
     color: black;
 }
+
+.atircleMessage a{
+    text-decoration: underline;
+    cursor: pointer;
+}
