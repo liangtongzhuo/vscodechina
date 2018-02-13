@@ -41,7 +41,7 @@ class Read extends Component {
   }
   // 渲染 Dom
   render() {
-    const atricleItem = this.state.item ? <AtricleItem item={this.state.item} MessageChildren={Message} /> : ''
+    const atricleItem = this.state.item ? <AtricleItem history={this.props.history}  skip={true} item={this.state.item} MessageChildren={Message} /> : ''
     return (
       <div>
         <Header history={this.props.history} />

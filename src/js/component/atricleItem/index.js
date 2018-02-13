@@ -30,11 +30,12 @@ class AtricleItem extends Component {
     const messageCount = this.props.item.get('messageCount')
     let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
 
-    let showRead, messagesShow, isEdid
+    let showRead, messagesShow, isEdid, full
     // 单独页面，默认都打开
-    if (!this.props.history) {
+    if (this.props.skip) {
       showRead = true
       messagesShow = true
+      full = true
     }
     if (AV.User.current() && AV.User.current().id === props.item.get('user').id){
         isEdid = true
@@ -50,7 +51,8 @@ class AtricleItem extends Component {
       headUrl,
       showRead,
       messagesShow,
-      isEdid
+      isEdid,
+      full
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -108,7 +110,7 @@ class AtricleItem extends Component {
           {/* <Button className="button" onClick={this._clickCollection}>
             <Collection className="g-color-gray-fill" />&nbsp; 收藏
               </Button> */}
-          <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.props.history ? '' : 'none' }}>
+          <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.state.full ? 'none' : '' }}>
             <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
               </Button>
 
@@ -149,6 +151,7 @@ class AtricleItem extends Component {
       )
     }
   }
+  // 编辑
   _clickSkitEdid(e) {
     this.props.history.push('/write/' + this.props.item.id)
   }
@@ -193,7 +196,7 @@ class AtricleItem extends Component {
   // _clickCollection(e) {
   //   console.log('-----收藏')
   // }
-  // 分享
+  // 阅读
   _clickSkitRead(e) {
     this.props.history.push('/read/' + this.props.item.id)
   }
