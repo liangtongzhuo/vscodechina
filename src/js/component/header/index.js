@@ -9,10 +9,10 @@ import { Bell } from './svg.js'
 class Header extends Component {
   constructor(props, context) {
     super(props)
-    
+
     // 当前用户头像
     let url = AV.User.current() && (AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g')
-    this.state = { anchorEl: null, menuShow: false, url }
+    this.state = { anchorEl: null, menuShow: false, url, numer: 100 }
 
     this._clickHead = this._clickHead.bind(this)
     this._handleClose = this._handleClose.bind(this)
@@ -30,13 +30,13 @@ class Header extends Component {
       <header className="header">
         <div className="g-container container">
           <div className="left">
-          <Link className="logo" to="/"> VSCodeChina </Link>
-          <nav>
-            <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 全部 </NavLink></Button>
-            <Button className="button"><NavLink to="/精华" className="g-color-gray a" activeClassName="selected"> 精华 </NavLink></Button>
-            <Button className="button"><NavLink to="/分享" className="g-color-gray a" activeClassName="selected"> 分享 </NavLink></Button>
-            <Button className="button"><NavLink to="/问答" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
-          </nav>
+            <Link className="logo" to="/"> VSCodeChina </Link>
+            <nav>
+              <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 全部 </NavLink></Button>
+              <Button className="button"><NavLink to="/精华" className="g-color-gray a" activeClassName="selected"> 精华 </NavLink></Button>
+              <Button className="button"><NavLink to="/分享" className="g-color-gray a" activeClassName="selected"> 分享 </NavLink></Button>
+              <Button className="button"><NavLink to="/问答" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
+            </nav>
           </div>
           {this._userShow()}
         </div>
@@ -47,9 +47,9 @@ class Header extends Component {
           onClick={this._handleMenuClose}
           id="menuList"
         >
-          <MenuItem onClick={this._handleClose.bind(this,0)}>个人信息</MenuItem>
-          <MenuItem onClick={this._handleClose.bind(this,1)}>文章</MenuItem>
-          <MenuItem onClick={this._handleClose.bind(this,2)}>退出</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this, 0)}>个人信息</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this, 1)}>文章</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this, 2)}>退出</MenuItem>
         </Menu>
       </header>
     )
@@ -59,6 +59,7 @@ class Header extends Component {
       (<div className="right">
         <Button className="button buttonw "><NavLink to="/write" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
         <IconButton className="bell">
+          <span className="tag" style={{ display: this.state.numer ? '' : 'none' }}>{this.state.numer}</span>
           <Bell className="g-color-gray-fill" />
         </IconButton>
         <img className="headimg" onClick={this._clickHead} src={this.state.url} alt="header" />
@@ -80,19 +81,19 @@ class Header extends Component {
     this.props.history.push('/login')
   }
   // 点击 item
-  _handleClose(i,e) {
+  _handleClose(i, e) {
     this.setState({ menuShow: false })
-    if(i === 0){
+    if (i === 0) {
       this.props.history.push('/me')
       return
     }
-    if(i === 1){
-      this.props.history.push('/atricle') 
+    if (i === 1) {
+      this.props.history.push('/atricle')
       return
     }
-    if(i === 2){
+    if (i === 2) {
       AV.User.logOut()
-      this.props.history.push('/')         
+      this.props.history.push('/')
       return
     }
   }

@@ -50,6 +50,19 @@
     align-items: center;
 }
 
+.header .right .bell .tag{
+    position: absolute;
+    font-size: 12px;
+    top: 7px;
+    left: 7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    line-height: 18px;
+    background: #0f88eb;
+    color: #fff;    
+}
+
 .header .right .button{
     background: #0f88eb;
     color: #fff;

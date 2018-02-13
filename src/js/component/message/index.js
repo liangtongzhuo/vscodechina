@@ -19,6 +19,7 @@ class MessageComponent extends Component {
     this._clickSend = this._clickSend.bind(this)
     this._net = this._net.bind(this)
     this._getDateDiff = this._getDateDiff.bind(this)
+    this._clickReply = this._clickReply.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -69,7 +70,7 @@ class MessageComponent extends Component {
           <Button className={item.likeBool ? 'button buttonColor' : 'button '} onClick={this._clickGood.bind(this, index)}>
             <MessageGood className={item.likeBool ? 'g-color-white-fill' : 'g-color-gray-fill'} />&nbsp; {item.get('like')} 赞
           </Button>
-          <Button className="button" onClick={this._XXX}>
+          <Button className="button" onClick={this._clickReply}>
             <Reply className="g-color-gray-fill" />&nbsp; 回复
           </Button>
         </div>
@@ -155,6 +156,10 @@ class MessageComponent extends Component {
       this._snackBarOpen('讨厌，网络错误了')
       console.log(err)
     })
+  }
+  // 回复
+  _clickReply(e){
+    this._snackBarOpen('讨厌，此功能还没写完 = =')
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.messagesShow === true) this._net()
