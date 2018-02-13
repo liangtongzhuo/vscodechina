@@ -8,3 +8,10 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 1024px) {
+    .notice .content{
+      margin-top: 135px;
+      width: 100%;   
+    }
+   
+}
