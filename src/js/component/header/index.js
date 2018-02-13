@@ -12,7 +12,7 @@ class Header extends Component {
 
     // 当前用户头像
     let url = AV.User.current() && (AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g')
-    this.state = { anchorEl: null, menuShow: false, url, numer: 100 }
+    this.state = { anchorEl: null, menuShow: false, url, numer: 0 }
 
     this._clickHead = this._clickHead.bind(this)
     this._handleClose = this._handleClose.bind(this)
