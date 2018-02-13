@@ -18,6 +18,7 @@ class Header extends Component {
     this._handleClose = this._handleClose.bind(this)
     this._handleMenuClose = this._handleMenuClose.bind(this)
     this._clickLogin = this._clickLogin.bind(this)
+    this._clickNotice = this._clickNotice.bind(this)    
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -58,7 +59,7 @@ class Header extends Component {
     return AV.User.current() ?
       (<div className="right">
         <Button className="button buttonw "><NavLink to="/write" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
-        <IconButton className="bell">
+        <IconButton className="bell" onClick={this._clickNotice}>
           <span className="tag" style={{ display: this.state.numer ? '' : 'none' }}>{this.state.numer}</span>
           <Bell className="g-color-gray-fill" />
         </IconButton>
@@ -67,6 +68,10 @@ class Header extends Component {
       (<div className="right">
         <Button className="button login" onClick={this._clickLogin}>&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;陆&nbsp;&nbsp;&nbsp;</Button>
       </div>)
+  }
+  // 跳转提示页面
+  _clickNotice(e){
+    this.props.history.push('/notice')
   }
   // 点击了头像
   _clickHead(e) {
