@@ -15,19 +15,18 @@ class Write extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { title: '标题', data: dataContent, atricleTagIndex: 0}         
+    this.state = { title: '', data: dataContent, atricleTagIndex: 0 }
 
-    const atricleId = this.props.match.params
+    const { atricleId } = this.props.match.params
     if (atricleId) {
       const atricle = AV.Object.createWithoutData('Atricle', atricleId)
       atricle.fetch().then(_ => {
-        this.state = {
+        this.setState({
           title: atricle.get('title'),
           data: atricle.get('data'),
           atricleTagIndex: atricle.get('tag'),
           progressShow: false
-        }
-        console.log(atricle.get('title'))
+        })
       }).catch(error => {
         console.log(error)
         this._snackBarOpen('网络错误啦， 3 秒后跳转我的页面')
@@ -52,9 +51,9 @@ class Write extends Component {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-    if (!AV.User.current()) {
-      this.props.history.push('/')
-    }
+    // if (!AV.User.current()) {
+    //   this.props.history.push('/')
+    // }
   }
   _onChangeTitle(e) {
     this.setState({ title: e.target.value })
@@ -75,7 +74,7 @@ class Write extends Component {
     }
     this.setState({ progressShow: true })
 
-    const atricleId = this.props.match.params
+    const { atricleId } = this.props.match.params
     let atricle
     if (atricleId) {
       atricle = AV.Object.createWithoutData('Atricle', atricleId)
