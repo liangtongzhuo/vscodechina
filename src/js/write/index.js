@@ -36,7 +36,6 @@ class Write extends Component {
       })
     }
 
-
     this._onChangeContent = this._onChangeContent.bind(this)
     this._onChangeTitle = this._onChangeTitle.bind(this)
     this._clickSave = this._clickSave.bind(this)
