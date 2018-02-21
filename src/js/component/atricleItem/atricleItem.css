@@ -111,7 +111,7 @@
 }
 
  .atricleItem .buttonBlue{
-  background-color: #0f88eb;
+  background-color: #0f88eb !important;
   color: #ffffff;
 }
 
