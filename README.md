@@ -1,4 +1,4 @@
-# Visual Studio Code 中文社区
+# Visual Studio Code 中文社区 
 
 访问地址 http://www.vscode-china.com
 
