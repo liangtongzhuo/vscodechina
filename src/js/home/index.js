@@ -45,7 +45,7 @@ class Home extends Component {
   }
   // 渲染 Dom
   render() {
-    const items = this.state.items.map((item, index) =>
+    const atricleItems = this.state.items.map((item, index) =>
       <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )
     return (
@@ -55,7 +55,7 @@ class Home extends Component {
           <Progress show={this.state.progressShow} />
           <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
           <div className="left">
-            {items}
+            {atricleItems}
           </div>
           <div className="right">
             <div className="card">

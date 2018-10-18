@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AV from "leancloud-storage"
+// import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"

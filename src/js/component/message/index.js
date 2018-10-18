@@ -37,13 +37,14 @@ class MessageComponent extends Component {
     query.addDescending('createdAt')
     query.include('user')
     query.find().then((messages) => {
-      messages = messages.map(item => {
-        if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
-          item.likeBool = true
-        }
-        return item
-      })
-
+      if(AV.User.current()){
+        messages = messages.map(item => {
+          if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
+            item.likeBool = true
+          }
+          return item
+        })
+      }
       this.setState({
         messages: messages,
         progressShow: false
