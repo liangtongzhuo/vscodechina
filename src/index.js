@@ -11,7 +11,13 @@ import registerServiceWorker from './registerServiceWorker'
 //初始化 Leancloud 
 const appId = 'U4D6TL1HgHHauvmmmhR7qNYA-gzGzoHsz'
 const appKey = 'wbh3vxJVB72NUiX8sSkcOPzx'
-AV.init({ appId, appKey })
+AV.init({
+    appId, appKey,
+    serverURLs: {
+        engine: 'https://vscode-eng-api.liangtongzhuo.com',
+        api: 'https://vscode-api.liangtongzhuo.com',
+    },
+})
 
 ReactDOM.render(<App />, document.getElementById('root'))
 registerServiceWorker()
