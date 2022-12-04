@@ -13,7 +13,9 @@ do
 	  echo "up-to-date"
 	else
 	  git checkout master
-	  git pull && npm install && npm run build
+# 拉取代码服务器编译	  git pull && npm install && npm run build
+# 本地编译自动拉取代码
+	  git pull 
 	fi	
   sleep 30 #每 30 秒循环一次
 done

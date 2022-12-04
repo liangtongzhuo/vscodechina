@@ -1,6 +1,6 @@
 # Visual Studio Code 中文社区 
 
-访问地址 http://vscode.liangtongzhuo.com
+访问地址 https://vscode.liangtongzhuo.com
 
 前端 GitHub 仓库  https://github.com/liangtongzhuo/vscodechina
 
