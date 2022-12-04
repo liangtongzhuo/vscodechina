@@ -113,7 +113,7 @@ class Me extends Component {
   }
   // 授权页面
   _buttonGithub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=https://vscode-china.com/oauth.html&state=' + AV.User.current().id
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=https://vscode.liangtongzhuo.com/oauth.html&state=' + AV.User.current().id
   }
   _open(e) {
     this.setState({ show: true })
