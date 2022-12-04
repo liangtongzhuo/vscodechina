@@ -13,8 +13,8 @@ class AtircleMessage extends Component {
     const time = this._getDateDiff(item.createdAt)
 
     this.state = { message, AtricleId, AtricleTitle, time }
-    
-    this._clickSkitRead = this._clickSkitRead.bind(this)    
+
+    this._clickSkitRead = this._clickSkitRead.bind(this)
     this._getDateDiff = this._getDateDiff.bind(this)
   }
 
@@ -36,13 +36,16 @@ class AtircleMessage extends Component {
     const now = new Date().getTime()
     const diffValue = now - dateTimeStamp
     if (diffValue < 0) return
+    const yearC = diffValue / month / 12
     const monthC = diffValue / month
     const weekC = diffValue / (7 * day)
     const dayC = diffValue / day
     const hourC = diffValue / hour
     const minC = diffValue / minute
-
-    if (monthC >= 1) {
+    if (yearC >= 1) {
+      return parseInt(yearC, 12) + "年前"
+    } 
+    else if (monthC >= 1) {
       return parseInt(monthC, 10) + "月前"
     }
     else if (weekC >= 1) {

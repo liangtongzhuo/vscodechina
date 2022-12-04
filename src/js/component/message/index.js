@@ -37,7 +37,7 @@ class MessageComponent extends Component {
     query.addDescending('createdAt')
     query.include('user')
     query.find().then((messages) => {
-      if(AV.User.current()){
+      if (AV.User.current()) {
         messages = messages.map(item => {
           if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
             item.likeBool = true
@@ -93,7 +93,7 @@ class MessageComponent extends Component {
             <TextareaAutosize value={this.state.message} onChange={this._textarea} placeholder="留言的人运气不会差" />
             <Button onClick={this._clickSend}>
               发送
-          </Button>
+            </Button>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ class MessageComponent extends Component {
     })
   }
   // 回复
-  _clickReply(e){
+  _clickReply(e) {
     this._snackBarOpen('讨厌，此功能还没写完 = =')
   }
   componentWillReceiveProps(nextProps) {
@@ -173,13 +173,16 @@ class MessageComponent extends Component {
     const now = new Date().getTime()
     const diffValue = now - dateTimeStamp
     if (diffValue < 0) return
+    const yearC = diffValue / month / 12
     const monthC = diffValue / month
     const weekC = diffValue / (7 * day)
     const dayC = diffValue / day
     const hourC = diffValue / hour
     const minC = diffValue / minute
-
-    if (monthC >= 1) {
+    if (yearC >= 1) {
+      return parseInt(yearC, 12) + "年前"
+    }
+    else if (monthC >= 1) {
       return parseInt(monthC, 10) + "月前"
     }
     else if (weekC >= 1) {
