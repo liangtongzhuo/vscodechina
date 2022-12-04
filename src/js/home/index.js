@@ -67,7 +67,6 @@ class Home extends Component {
               少年少女们，打开了总要说些什么，战胜你的社交恐惧 :)
           </div>
             <footer className="footer">
-              <span className="footer-dot"></span>
               <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>
               <span className="footer-dot"></span>
               <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>
@@ -76,7 +75,6 @@ class Home extends Component {
             </footer>
           </div>
           <footer className="footer moblie">
-            <span className="footer-dot"></span>
             <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina">前端 GitHub 仓库</a>
             <span className="footer-dot"></span>
             <a className="footer-item" href="https://github.com/liangtongzhuo/vscodechina_server">后端 GitHub 仓库</a>
